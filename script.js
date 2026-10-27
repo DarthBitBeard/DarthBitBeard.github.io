@@ -3,6 +3,27 @@
   var nav = document.getElementById("topNav");
   var progressBar = document.getElementById("progressBar");
 
+  var themeToggle = document.getElementById("themeToggle");
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    try { localStorage.setItem("theme", theme); } catch (e) {}
+    if (themeToggle) {
+      var dark = theme === "dark";
+      themeToggle.setAttribute("aria-pressed", dark ? "true" : "false");
+      themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+    }
+  }
+
+  if (themeToggle) {
+    setTheme(document.documentElement.getAttribute("data-theme") || "light");
+    themeToggle.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+      setTheme(current === "dark" ? "light" : "dark");
+    });
+  }
+
   function onScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
     if (nav) {
