@@ -240,13 +240,14 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
 }
 .ticker-track {
   display: flex;
-  gap: 36px;
   width: max-content;
   animation: ticker-scroll 32s linear infinite;
   font-weight: 600;
   color: #424245;
   white-space: nowrap;
+  will-change: transform;
 }
+.ticker-track span { padding-right: 36px; }
 .ticker:hover .ticker-track { animation-play-state: paused; }
 @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
