@@ -16,6 +16,7 @@
   <nav class="nav-inner" aria-label="Main navigation">
     <a class="logo" href="#top">Landon Beard</a>
     <div class="nav-links">
+      <a href="#about">About</a>
       <a href="#certifications">Certifications</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
@@ -27,21 +28,52 @@
 
 <main id="main">
   <section class="hero" id="top">
-    <div class="wrap hero-inner">
-      <p class="eyebrow reveal">IT Specialist II | Cybersecurity</p>
-      <h1 class="reveal">Landon Beard</h1>
-      <p class="hero-sub reveal">A decade of technical experience, from corporate IT support to live production technology. Calm under pressure, clear with non-technical users, and methodical about root cause.</p>
-      <div class="hero-ctas reveal">
-        <a class="btn btn-primary" href="#projects">View security projects</a>
-        <a class="btn btn-ghost" href="#experience">See experience</a>
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+    <div class="wrap hero-split">
+      <div class="hero-text">
+        <p class="eyebrow reveal">IT Specialist II | Cybersecurity</p>
+        <h1 class="reveal">Landon <span class="grad">Beard</span></h1>
+        <p class="hero-sub reveal">A decade of technical experience, from corporate IT support to live production technology. Calm under pressure, clear with non-technical users, and methodical about root cause.</p>
+        <div class="hero-ctas reveal">
+          <a class="btn btn-primary" href="#projects">View security projects</a>
+          <a class="btn btn-ghost" href="#experience">See experience</a>
+        </div>
+        <p class="hero-meta reveal">Spring Hill, Florida</p>
+        <ul class="hero-pills reveal" aria-label="Key certifications">
+          <li>CompTIA Security+</li>
+          <li>ISC2 Certified in Cybersecurity</li>
+          <li>Microsoft Azure Fundamentals</li>
+        </ul>
       </div>
-      <p class="hero-meta reveal">Spring Hill, Florida</p>
-      <ul class="hero-pills reveal" aria-label="Key certifications">
-        <li>CompTIA Security+</li>
-        <li>ISC2 Certified in Cybersecurity</li>
-        <li>Microsoft Azure Fundamentals</li>
-      </ul>
-      <p class="scroll-hint reveal" aria-hidden="true">Scroll to explore <span>&darr;</span></p>
+      <figure class="photo-card reveal" id="photoCard">
+        <div class="photo-frame">
+          <img src="photo.jpg" alt="Landon Beard" width="800" height="1000" fetchpriority="high">
+        </div>
+        <span class="chip chip-1">Security+ ce</span>
+        <span class="chip chip-2">Home Lab</span>
+        <figcaption>IT Specialist II, focused on security, automation, and infrastructure that stays up.</figcaption>
+      </figure>
+    </div>
+    <p class="scroll-hint reveal" aria-hidden="true">Scroll to explore <span>&darr;</span></p>
+  </section>
+
+  <div class="ticker" aria-label="Core skills">
+    <div class="ticker-track">
+      <span>Python</span><span>PowerShell</span><span>Active Directory</span><span>Network Security</span><span>Vulnerability Assessment</span><span>Kali Linux</span><span>Microsoft Azure</span><span>Bash</span><span>OPNsense</span><span>AdGuard</span><span>Hyper-V</span><span>Windows Server</span>
+      <span>Python</span><span>PowerShell</span><span>Active Directory</span><span>Network Security</span><span>Vulnerability Assessment</span><span>Kali Linux</span><span>Microsoft Azure</span><span>Bash</span><span>OPNsense</span><span>AdGuard</span><span>Hyper-V</span><span>Windows Server</span>
+    </div>
+  </div>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <h2 class="reveal">Built in real environments, not just labs on paper</h2>
+      <p class="section-intro reveal">Production technology, corporate IT, and a home lab that runs every day. The same approach in all three: find the root cause, fix it properly, and document it so it stays fixed.</p>
+      <div class="about-grid">
+        <article class="stat-tile reveal"><p class="stat-num">6+ yrs</p><p>Live video production technology at Grace Family Church, leading the tech team</p></article>
+        <article class="stat-tile reveal"><p class="stat-num">3+ yrs</p><p>At Stan Weaver, from IT Specialist to IT Specialist II, in Tampa, FL</p></article>
+        <article class="stat-tile reveal"><p class="stat-num">24/7</p><p>Home lab and Folding@Home team running high-uptime Linux and Windows nodes</p></article>
+      </div>
     </div>
   </section>
 
@@ -50,7 +82,7 @@
       <h2 class="reveal">Certifications</h2>
       <p class="section-intro reveal">Verified credentials, led by Security+ and the CSIS stackable certification.</p>
       <div class="cert-grid">
-        <article class="cert-card reveal"><h3>CompTIA Security+ ce</h3><p>Oct 2026, expires Oct 2029</p></article>
+        <article class="cert-card cert-feature reveal"><h3>CompTIA Security+ ce</h3><p>Oct 2026, expires Oct 2029</p></article>
         <article class="cert-card reveal"><h3>CompTIA Secure Infrastructure Specialist, CSIS</h3><p>Stackable, Oct 2026</p></article>
         <article class="cert-card reveal"><h3>CompTIA A+ ce</h3><p>May 2023, expires Oct 2029</p></article>
         <article class="cert-card reveal"><h3>CompTIA Network+ ce</h3><p>Oct 2023, expires Oct 2029</p></article>
@@ -116,7 +148,7 @@
     </div>
   </section>
 
-  <section class="section band" id="projects">
+  <section class="section band dark-band" id="projects">
     <div class="wrap">
       <h2 class="reveal">Security Projects</h2>
       <p class="section-intro reveal">Only security related work. A working home lab, hands-on offensive security practice, and volunteer infrastructure leadership.</p>
@@ -190,7 +222,7 @@
 <footer>
   <div class="wrap footer-inner">
     <p>Landon Beard, Spring Hill, Florida</p>
-    <p>Last updated October 2026. No phone number is published on this public site.</p>
+    <p>Last updated October 2026. No phone number is published on this public site. <a href="#top">Back to top</a></p>
   </div>
 </footer>
 </body>

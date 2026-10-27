@@ -34,7 +34,7 @@
   }
 
   var navLinks = document.querySelectorAll(".nav-links a");
-  var sections = ["certifications", "experience", "projects", "skills"]
+  var sections = ["about", "certifications", "experience", "projects", "skills"]
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
   if ("IntersectionObserver" in window && sections.length) {
@@ -50,7 +50,7 @@
     sections.forEach(function (section) { sectionObserver.observe(section); });
   }
 
-  var hero = document.querySelector(".hero-inner");
+  var hero = document.querySelector(".hero-split");
   if (hero && !reduceMotion) {
     var ticking = false;
     window.addEventListener("scroll", function () {
@@ -58,13 +58,26 @@
         window.requestAnimationFrame(function () {
           var y = window.scrollY || 0;
           if (y < 500) {
-            hero.style.transform = "translateY(" + y * 0.06 + "px)";
-            hero.style.opacity = String(Math.max(0.35, 1 - y / 700));
+            hero.style.transform = "translateY(" + y * 0.04 + "px)";
           }
           ticking = false;
         });
         ticking = true;
       }
     }, { passive: true });
+  }
+
+  var photoCard = document.getElementById("photoCard");
+  var photoFrame = photoCard ? photoCard.querySelector(".photo-frame") : null;
+  if (photoCard && photoFrame && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+    photoCard.addEventListener("mousemove", function (event) {
+      var rect = photoCard.getBoundingClientRect();
+      var x = (event.clientX - rect.left) / rect.width - 0.5;
+      var y = (event.clientY - rect.top) / rect.height - 0.5;
+      photoFrame.style.transform = "rotateY(" + x * 8 + "deg) rotateX(" + -y * 8 + "deg) scale(1.02)";
+    });
+    photoCard.addEventListener("mouseleave", function () {
+      photoFrame.style.transform = "rotateY(0deg) rotateX(0deg) scale(1)";
+    });
   }
 })();
