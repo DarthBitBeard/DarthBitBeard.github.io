@@ -347,6 +347,8 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
 .project-grid .project { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.12); color: #fff; backdrop-filter: blur(10px); }
 .project-grid .project-meta { color: #b9c9da; }
 .project-grid .project h3 { font-size: 1.3rem; }
+.project-link { display: inline-block; margin-top: 14px; color: #9ec8f5; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.project-link:hover, .project-link:focus-visible { color: #fff; }
 
 .skill-grid {
   display: grid;
