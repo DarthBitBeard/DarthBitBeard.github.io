@@ -74,7 +74,7 @@
       <p class="now-label reveal">Now, October 2026</p>
       <div class="now-grid">
         <article class="now-item reveal"><h3>CySA+ exam, Oct 31</h3><p>Training complete. Exam scheduled Saturday, October 31, 2026, at 10:30 AM ET.</p></article>
-        <article class="now-item reveal"><h3>Building Lantern</h3><p>Open source home network scanner, in active development. See the demo in Security Projects below.</p></article>
+        <article class="now-item reveal"><h3>Building Lantern</h3><p>Open source home network scanner, in active development. See it in Security Projects below.</p></article>
         <article class="now-item reveal"><h3>Next: honeypot</h3><p>Deploying a defensive honeypot next. Scaffold is ready, and the dashboard will stay private over Tailscale.</p></article>
       </div>
     </div>
@@ -215,24 +215,6 @@
           <p><a class="project-link" href="https://github.com/DarthBitBeard/Lantern" target="_blank" rel="noopener">View Lantern on GitHub</a></p>
         </article>
       </div>
-
-      <article class="project demo-block reveal">
-        <p class="project-eyebrow">Lantern in Action</p>
-        <h3>Demo run, no real network scanned</h3>
-        <p class="project-meta">Output from Lantern's built-in demo, run with <code>python3 -m lantern demo</code></p>
-        <pre class="demo-terminal" aria-label="Lantern demo output"><code>$ python3 -m lantern demo
-Demo scan 1: 5 devices
-Demo scan 2: 6 devices
-New devices: ['192.168.1.99']
-Devices gone: []
-Port changes: []</code></pre>
-        <div class="demo-finding">
-          <p><span class="demo-badge">Critical</span> <strong>New device 192.168.1.99, port 23 Telnet</strong></p>
-          <p>Telnet sends everything, including passwords, in plain text. Turn Telnet off and use SSH instead.</p>
-        </div>
-        <p class="demo-note">Demo data only. The addresses, MACs, and hostnames above are fake, from Lantern's built-in demo. The second scan adds one unknown device with Telnet open, and the diff flags it.</p>
-        <p><a class="project-link" href="https://github.com/DarthBitBeard/Lantern" target="_blank" rel="noopener">Try the demo from the Lantern repo</a></p>
-      </article>
     </div>
   </section>
 

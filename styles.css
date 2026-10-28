@@ -375,16 +375,6 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
 .now-item { background: var(--band); border: 1px solid var(--border); border-radius: 20px; padding: 20px 22px; }
 .now-item h3 { margin: 0 0 6px; font-size: 1.05rem; }
 .now-item p { margin: 0; color: var(--muted); }
-.demo-block { margin-top: 20px; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.12); color: #fff; }
-.demo-block .project-eyebrow { color: #8ec2f5; }
-.demo-block .project-meta { color: #b9c9da; }
-.demo-block .project-meta code { color: #eef3f8; }
-.demo-terminal { background: #0d1117; color: #e6edf3; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 14px; padding: 18px 20px; overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: 0.9rem; line-height: 1.65; margin: 16px 0; white-space: pre; }
-.demo-finding { border-left: 4px solid #f85149; background: rgba(248, 81, 73, 0.14); padding: 14px 16px; border-radius: 0 12px 12px 0; margin: 16px 0; }
-.demo-finding p { margin: 0 0 6px; }
-.demo-finding p:last-child { margin-bottom: 0; }
-.demo-badge { display: inline-block; background: #f85149; color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; margin-right: 6px; }
-.demo-note { color: #b9c9da; font-size: 0.95rem; }
 @media (max-width: 860px) { .now-grid { grid-template-columns: 1fr; } }
 
 .skill-grid {
@@ -473,6 +463,4 @@ footer { padding: 28px 0 36px; background: var(--bg); }
   .reveal { opacity: 1 !important; transform: none !important; }
   .section, .hero { padding: 24px 0; }
   body { background: #fff; }
-  .demo-terminal { background: #fff; color: #000; border: 1px solid #ccc; }
-  .demo-block, .demo-block .project-meta, .demo-note { color: #1d1d1f; }
 }
