@@ -55,7 +55,7 @@
   }
 
   var navLinks = document.querySelectorAll(".nav-links a");
-  var sections = ["about", "certifications", "experience", "projects", "skills"]
+  var sections = ["about", "certifications", "experience", "projects", "volunteering", "skills"]
     .map(function (id) { return document.getElementById(id); })
     .filter(Boolean);
   if ("IntersectionObserver" in window && sections.length) {

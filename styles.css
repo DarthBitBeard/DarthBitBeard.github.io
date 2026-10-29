@@ -367,6 +367,8 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
 .project-grid .project { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.12); color: #fff; backdrop-filter: blur(10px); }
 .project-grid .project-meta { color: #b9c9da; }
 .project-grid .project h3 { font-size: 1.3rem; }
+.volunteer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.volunteer-grid .project h3 { font-size: 1.3rem; }
 .project-link { display: inline-block; margin-top: 14px; color: #9ec8f5; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .project-link:hover, .project-link:focus-visible { color: #fff; }
 
@@ -431,7 +433,7 @@ footer { padding: 28px 0 36px; background: var(--bg); }
   .about-grid { grid-template-columns: 1fr; }
   .cert-grid { grid-template-columns: repeat(2, 1fr); }
   .cert-feature { grid-column: span 2; }
-  .project-grid, .skill-grid { grid-template-columns: 1fr; }
+  .project-grid, .volunteer-grid, .skill-grid { grid-template-columns: 1fr; }
   .section { padding: 64px 0; }
   .hero { padding: 72px 0 56px; }
 }
