@@ -8,8 +8,8 @@
 <meta name="color-scheme" content="light dark">
 <script>try{var savedTheme=localStorage.getItem("theme");var theme=savedTheme||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",theme);}catch(e){document.documentElement.setAttribute("data-theme","light");}</script>
 <script>try{if(localStorage.getItem("lb-skin")==="casefile"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("casefile.html");}}catch(e){}</script>
-<link rel="stylesheet" href="styles.css?v=5">
-<script src="script.js?v=5" defer></script>
+<link rel="stylesheet" href="styles.css?v=6">
+<script src="script.js?v=6" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -32,13 +32,16 @@
 </header>
 
 <div class="skin-loader" id="skinLoader" aria-hidden="true" style="display:none">
-  <div class="loader-layer loader-theme-light">
+  <div class="loader-half loader-source loader-theme-light">
     <p class="loader-eyebrow">Landon Beard // Portfolio</p>
-    <p class="loader-title loader-title-static">Classic</p>
-    <p class="loader-sub">IT Specialist II. Cybersecurity.</p>
-    <div class="loader-track"><span class="loader-fill"></span></div>
+    <p class="loader-split-name">Classic</p>
   </div>
-  <div class="loader-layer loader-dest loader-theme-dark">
+  <div class="loader-half loader-dest loader-theme-dark">
+    <p class="loader-eyebrow">Landon Beard // Dossier</p>
+    <p class="loader-split-name">Case File</p>
+  </div>
+  <span class="loader-divider" aria-hidden="true"></span>
+  <div class="loader-full loader-theme-dark">
     <p class="loader-eyebrow">Landon Beard // Dossier</p>
     <p class="loader-title">Opening case file</p>
     <p class="loader-sub">Subject: Landon Beard. Updated Nov 2026.</p>

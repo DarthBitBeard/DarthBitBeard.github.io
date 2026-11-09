@@ -103,10 +103,10 @@
     void skinLoader.offsetWidth;
     skinLoader.classList.add("show");
     skinLoader.setAttribute("aria-hidden", "false");
-    window.requestAnimationFrame(function () {
+    window.setTimeout(function () {
       for (var i = 0; i < loaderFills.length; i++) { loaderFills[i].style.width = "100%"; }
-    });
-    window.setTimeout(function () { window.location.href = href; }, 950);
+    }, 780);
+    window.setTimeout(function () { window.location.href = href; }, 1300);
   }
   function openClassic() { switchSkin("classic", "index.html"); }
   var photoCardEgg = document.getElementById("photoCard");
