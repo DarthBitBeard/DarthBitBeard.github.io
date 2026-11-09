@@ -176,6 +176,11 @@ jobs:
           - "Provide advanced technical support for end users across hardware, software, and network issues, resolving escalated problems through methodical root-cause analysis."
           - "Administer Active Directory user accounts, group memberships, and access permissions."
           - "Design and build Python automation (FastAPI, SQLite) with document processing and PII redaction, deployed as a self-restarting Windows service."
+        # The printable resume uses these bullets instead of the ones above.
+        resume_bullets:
+          - "Provide advanced technical support for end users across hardware, software, and network issues, resolving escalated problems through methodical root-cause analysis."
+          - "Administer Active Directory user accounts, group memberships, and access permissions."
+          - "Designed and built an internal commission-reporting application (Python, FastAPI, SQLite) with OCR document processing (OpenCV, Tesseract) and PII redaction, deployed as a self-restarting Windows service."
       - titles:
           - name: "IT Specialist"
             dates: "Jul 2023 - Nov 2024"
@@ -285,3 +290,36 @@ education:
     years: "2020 - 2021"
   - school: "Hillsborough College"
     years: "2016 - 2018"
+
+# ---------------------------------------------------------------------------
+# Printable resume: resume.html, saved as Landon_Beard_Resume.pdf by
+# tools/make_resume_pdf.py. It reuses person, about, certifications, jobs,
+# education and skills from above. The entries below are written shorter
+# than the site versions so the resume stays at two pages.
+resume_pdf:
+  website: "landonbeard.beardlab.us"
+  projects:
+    - title: "Lantern, Open Source Home Network Scanner"
+      dates: "Oct 2026 - Present"
+      bullets:
+        - "Built from scratch a local-first scanner (Python, standard library only) that finds devices on a private home network, flags risky open ports in plain English, and shows what changed since the last scan."
+        - "Defensive only: private subnets only, no brute force or exploits, with results in a local SQLite file with scan history and diff, plus a local web dashboard."
+    - title: "T-Pot Honeypot, Live Attack Telemetry"
+      dates: "Oct 2026 - Present"
+      bullets:
+        - "Deployed a T-Pot honeypot on an isolated Oracle Cloud virtual machine with only decoy services exposed, collecting real SSH, SQL, SIP, and HTTP attack telemetry through Cowrie, Dionaea, Sentrypeer, and Tanner."
+        - "Logged 149,551 attacks in 24 hours (Oct 30, 2026); counts and trends are shared only in sanitized form, with no source IPs or payloads published."
+    - title: "Hands-On Cybersecurity and Offensive Security Labs, Hack The Box"
+      dates: "May 2026 - Present"
+      bullets:
+        - "Practical training in vulnerability assessment, network enumeration, and privilege escalation using Kali Linux tooling."
+        - "Bash and PowerShell scripting to automate reconnaissance and interact with target systems."
+        - "Translating offensive security findings into defensive strategies for enterprise networks."
+        - "BSides Tampa CTF: placed 11th overall as a team, capturing 19 of 24 flags, and was named Team MVP (as Beard98)."
+  volunteering:
+    - title: "Folding@Home, Team Lead, Team SpringHill_Folders"
+      dates: "Mar 2026 - Present"
+      bullets:
+        - "Founded and manage a multi-node distributed computing team (Linux and Windows nodes) supporting protein-folding research at the Washington University School of Medicine."
+        - "Tune GPU and CPU workloads and thermal profiles for 24/7 high-uptime contribution."
+        - "Reached 220,000,000 points on October 29, 2026, certified by Folding@home."
