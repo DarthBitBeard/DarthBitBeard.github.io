@@ -53,6 +53,7 @@
   /* ---------- Easter egg: the Case File skin ----------
      Triple-tap the portrait, or type "casefile" anywhere. */
   function openCaseFile(origin) {
+    if (window.LBEggs) { window.LBEggs.found("casefile", false); }
     if (window.LBSkin) { window.LBSkin.go("casefile", { origin: origin }); }
     else { try { localStorage.setItem("lb-skin", "casefile"); } catch (e) {} window.location.href = "casefile.html"; }
   }
@@ -76,7 +77,6 @@
     typedEgg = (typedEgg + event.key.toLowerCase()).slice(-8);
     if (typedEgg === "casefile") { typedEgg = ""; openCaseFile(); }
   });
-  try { console.log("Psst. The subject keeps secrets. Tap the portrait three times."); } catch (e) {}
 
   /* ---------- Scroll: nav state, progress bar, back-to-top ---------- */
   function onScroll() {

@@ -1,0 +1,160 @@
+/* Easter eggs for the Classic skin (eggs.js). */
+
+/* ---------- Achievement toasts ---------- */
+.egg-toasts {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 260;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(380px, calc(100vw - 40px));
+  pointer-events: none;
+}
+.egg-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px 14px 14px;
+  border-radius: 16px;
+  background: #0f1729;
+  color: #eef2f7;
+  border: 1px solid rgba(124, 196, 255, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+.egg-toast.show { opacity: 1; transform: none; }
+.egg-toast-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0071e3, #6366f1);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.45);
+}
+.egg-toast-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.egg-toast-kicker { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #7cc4ff; }
+.egg-toast-title { font-size: 0.98rem; letter-spacing: -0.01em; }
+.egg-toast-text { font-size: 0.86rem; color: #a8b6c8; }
+.egg-toast-text:empty { display: none; }
+.egg-toast--gold { border-color: rgba(250, 204, 21, 0.45); }
+.egg-toast--gold .egg-toast-icon { background: linear-gradient(135deg, #f59e0b, #facc15); box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45); }
+.egg-toast--gold .egg-toast-kicker { color: #fcd34d; }
+.egg-toast--mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; border-color: rgba(248, 113, 113, 0.45); }
+.egg-toast--mono .egg-toast-icon { background: #dc2626; box-shadow: 0 6px 16px rgba(220, 38, 38, 0.45); }
+.egg-toast--mono .egg-toast-kicker { color: #fca5a5; }
+.egg-toast--mono .egg-toast-title { font-size: 0.88rem; }
+
+/* ---------- Terminal ---------- */
+.egg-term {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.egg-term.open { display: flex; }
+html.egg-term-open body { overflow: hidden; }
+.egg-term-backdrop { position: absolute; inset: 0; background: rgba(5, 9, 18, 0.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: egg-fade 0.25s ease; }
+.egg-term-window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(760px, 100%);
+  height: min(480px, 80vh);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #070c16;
+  border: 1px solid rgba(124, 196, 255, 0.22);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.88rem;
+  color: #d6e2f0;
+  animation: egg-pop 0.35s cubic-bezier(0.2, 0.8, 0.2, 1.1);
+}
+.egg-term-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: #0f1729; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.egg-term-dots { display: flex; gap: 7px; }
+.egg-term-dots i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; }
+.egg-term-dots i:nth-child(2) { background: #febc2e; }
+.egg-term-dots i:nth-child(3) { background: #28c840; }
+.egg-term-title { flex: 1; text-align: center; font-size: 0.78rem; color: #8494a8; }
+.egg-term-close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: #8494a8; font-size: 1.3rem; line-height: 1; cursor: pointer; }
+.egg-term-close:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.egg-term-out { flex: 1; overflow-y: auto; padding: 16px 18px 6px; scrollbar-width: thin; scrollbar-color: #2b3a50 transparent; }
+.egg-term-line { margin: 0; white-space: pre-wrap; word-break: break-word; line-height: 1.6; }
+.egg-term-line:empty { min-height: 1.6em; }
+.egg-term-line.cmd { color: #7cc4ff; margin-top: 6px; }
+.egg-term-line.dim { color: #7b8aa0; }
+.egg-term-line.err { color: #fca5a5; }
+.egg-term-line a { color: #9ed3ff; }
+.egg-term-form { display: flex; align-items: center; gap: 10px; padding: 8px 18px 16px; }
+.egg-term-prompt { color: #4ade80; white-space: nowrap; }
+.egg-term-input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  caret-color: #4ade80;
+}
+
+/* ---------- Konami code rain ---------- */
+.egg-rain { position: fixed; inset: 0; z-index: 240; width: 100vw; height: 100vh; pointer-events: none; opacity: 0.92; transition: opacity 0.8s ease; }
+.egg-rain.fade { opacity: 0; }
+
+/* ---------- sudo: denied shake and red flash ---------- */
+html.egg-denied main { animation: egg-shake 0.5s ease; }
+html.egg-denied body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 230;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 4px rgba(220, 38, 38, 0.7), inset 0 0 120px rgba(220, 38, 38, 0.35);
+  animation: egg-fade-out 0.7s ease forwards;
+}
+
+/* ---------- Barrel roll ---------- */
+html.egg-roll { overflow-x: hidden; }
+html.egg-roll body { animation: egg-roll 1.2s cubic-bezier(0.65, 0, 0.35, 1); transform-origin: 50% var(--egg-oy, 50vh); }
+
+/* ---------- Theme party ---------- */
+html.egg-party main, html.egg-party .nav { animation: egg-party 1s linear infinite; }
+html.egg-party .logo-mark { animation: egg-spin 0.6s linear infinite; }
+
+@keyframes egg-fade { from { opacity: 0; } }
+@keyframes egg-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes egg-pop { from { opacity: 0; transform: translateY(20px) scale(0.96); } }
+@keyframes egg-shake {
+  0%, 100% { transform: none; }
+  15% { transform: translateX(-10px); }
+  30% { transform: translateX(9px); }
+  45% { transform: translateX(-7px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+@keyframes egg-roll { to { transform: rotate(360deg); } }
+@keyframes egg-party { from { filter: hue-rotate(0deg) saturate(1.6); } to { filter: hue-rotate(360deg) saturate(1.6); } }
+@keyframes egg-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 620px) {
+  .egg-toasts { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+  .egg-term { padding: 10px; }
+  .egg-term-window { height: 70vh; font-size: 0.8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .egg-toast, .egg-term-window, .egg-term-backdrop { transition: none; animation: none; }
+}
+@media print { .egg-toasts, .egg-term, .egg-rain { display: none !important; } }

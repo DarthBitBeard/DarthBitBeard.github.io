@@ -24,6 +24,8 @@
 <link rel="stylesheet" href="skin-transition.css?v={{ v }}">
 <script src="skin-transition.js?v={{ v }}" defer></script>
 <script src="script.js?v={{ v }}" defer></script>
+<link rel="stylesheet" href="eggs.css?v={{ v }}">
+<script src="eggs.js?v={{ v }}" defer></script>
 </head>
 <body>
 {% include skin-transition.html skin="classic" %}
@@ -306,6 +308,7 @@
     <p>Last updated <time datetime="{{ site.time | date: '%Y-%m-%d' }}">{{ site.time | date: '%B %-d, %Y' }}</time>. No phone number is published on this public site.</p>
   </div>
 </footer>
+<script id="eggData" type="application/json">{"person": {{ p | jsonify }}, "certs": {{ r.certifications | map: "name" | jsonify }}, "projects": {{ r.projects | map: "title" | jsonify }}}</script>
 
 <a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg class="i" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
 </body>

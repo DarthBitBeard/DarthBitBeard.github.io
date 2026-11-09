@@ -10,6 +10,7 @@ Built with HTML and CSS, plus small JavaScript files for scroll effects, the mob
 - **Classic skin layout and styling**: `index.html` and `styles.css`.
 - **Case File skin layout and styling**: `casefile.html` and `casefile.css`.
 - **Skin-switch transition**: `_includes/skin-transition.html` (markup), `skin-transition.css` and `skin-transition.js`. The exit sequence plays on the page being left; the page being opened plays a matching arrival sequence, so the page change happens behind identical screens. Any click or key skips it, and it is skipped entirely for visitors who prefer reduced motion.
+- **Easter eggs** (Classic skin): `eggs.js` and `eggs.css`. Six are hidden: a terminal (the backtick key or the footer "LB" badge), the Konami code, typing `sudo`, five clicks on the nav logo, eight quick theme toggles, and the Case File skin. Each shows an achievement toast, progress is saved in the visitor's browser, and the browser console lists hints.
 - **Icons**: inline SVG symbols in `_includes/icons.html`.
 - **Resume PDF**: replace `Landon_Beard_Resume.pdf`.
 - **Photo**: replace `photo.jpg` (800x1000), then run `python tools/make_images.py` to regenerate the AVIF/WebP sizes, the link-preview image `og-image.jpg`, and the PNG icons.
