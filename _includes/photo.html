@@ -1,0 +1,5 @@
+<picture>
+  <source type="image/avif" srcset="photo-400.avif 400w, photo-800.avif 800w" sizes="{{ include.sizes }}">
+  <source type="image/webp" srcset="photo-400.webp 400w, photo-800.webp 800w" sizes="{{ include.sizes }}">
+  <img src="photo.jpg" alt="{{ site.data.resume.person.name }}" width="800" height="1000" fetchpriority="high" decoding="async">
+</picture>

@@ -1,0 +1,278 @@
+# Single source of truth for the site's content.
+# Both index.html (Classic skin) and casefile.html (Case File skin) render from
+# this file, so an update here shows up on both pages.
+#
+# Text fields are inserted as HTML, so write "&amp;" for an ampersand.
+
+person:
+  name: "Landon Beard"
+  title: "IT Specialist II"
+  field: "Cybersecurity"
+  location: "Spring Hill, Florida"
+  locality: "Spring Hill"
+  region: "FL"
+  email: "lanbeard105@gmail.com"
+  linkedin: "https://www.linkedin.com/in/landon-beard"
+  github: "https://github.com/DarthBitBeard"
+  resume_pdf: "Landon_Beard_Resume.pdf"
+  tagline: "A decade of technical experience, from corporate IT support to live production technology. Calm under pressure, clear with non-technical users, and methodical about root cause."
+  photo_caption: "IT Specialist II, focused on security, automation, and infrastructure that stays up."
+  about: "IT Specialist II and CompTIA CySA+ holder with a decade of technical experience spanning corporate IT support and live production technology. At Stan Weaver, provides advanced end user support, administers Active Directory, and builds Python automation that removes manual work, including document processing with PII redaction deployed as a self-restarting Windows service. Holds CompTIA CySA+, Security+, A+, and Network+, the CSAP and CSIS stackable certifications, ISC2 Certified in Cybersecurity, and Microsoft Azure Fundamentals. Outside the day job, runs a high availability home lab behind a redundant OPNsense firewall cluster with DNS filtering and automated disaster recovery, built Lantern, an open source local-first network scanner, and operates a live defensive honeypot. Also leads Team SpringHill_Folders, a distributed computing team supporting protein folding research. Focused on vulnerability management, identity and access, and detection work that holds up in production, not just in a lab."
+
+hero_pills:
+  - "CompTIA CySA+"
+  - "CompTIA Security+"
+  - "ISC2 Certified in Cybersecurity"
+  - "Microsoft Azure Fundamentals"
+
+stats:
+  - value: "6+ yrs"
+    text: "Live video production technology at Grace Family Church, leading the tech team"
+  - value: "3+ yrs"
+    text: "At Stan Weaver, from IT Specialist to IT Specialist II, in Tampa, FL"
+  - value: "24/7"
+    text: "Home lab and Folding@Home team running high-uptime Linux and Windows nodes"
+
+# "Now" strip. as_of is shown on the page so readers can see how fresh it is.
+now:
+  as_of: 2026-11-01
+  items:
+    - title: "CySA+ passed"
+      date: 2026-10-31
+      text: "Passed the CompTIA CySA+ (CS0-004) exam on October 31, 2026. Next on the ladder: SC-300."
+    - title: "Lantern ready for use"
+      date: 2026-10-28
+      text: "Open source home network scanner, ready to use and still being updated. See it in Security Projects below."
+      text_casefile: "Open source home network scanner, ready to use and still being updated. See it in the Evidence Board below."
+    - title: "Honeypot live"
+      date: 2026-10-30
+      text: "Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. The live dashboard stays private."
+
+# Skills ticker on the Classic skin.
+ticker_skills:
+  - "Python"
+  - "PowerShell"
+  - "Active Directory"
+  - "Network Security"
+  - "Vulnerability Assessment"
+  - "Kali Linux"
+  - "Microsoft Azure"
+  - "Bash"
+  - "OPNsense"
+  - "AdGuard"
+  - "Hyper-V"
+  - "Windows Server"
+  - "Incident Response"
+  - "Vulnerability Management"
+  - "Identity and Access Management"
+  - "Network Administration"
+  - "Firewalls"
+  - "FastAPI"
+  - "TCP/IP"
+  - "Virtualization"
+  - "IT Operations"
+
+# Dated log ticker on the Case File skin.
+timeline:
+  - date: "2026-10-31"
+    event: "CYSA+ PASSED"
+  - date: "2026-10-28"
+    event: "HONEYPOT DEPLOYED"
+  - date: "2026-10-20"
+    event: "SECURITY+ PASSED"
+  - date: "2026-10-29"
+    event: "220,000,000 FOLDING@HOME PTS"
+  - date: "2026-10-28"
+    event: "LANTERN PUBLISHED"
+  - date: "2026-05-26"
+    event: "ISC2 CC EARNED"
+  - date: "2023-10-20"
+    event: "NETWORK+ PASSED"
+  - date: "2023-05-23"
+    event: "A+ PASSED"
+
+# new_until: the "New" badge hides itself after this date (YYYY-MM-DD).
+certifications:
+  - name: "CompTIA CySA+ (CS0-004)"
+    detail: "Oct 2026, expires Oct 2029"
+    feature: true
+    new_until: "2027-01-31"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/6f017276-ee83-465f-86f4-5b300eeb3a56/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA Security+ ce"
+    detail: "Oct 2026, expires Oct 2029"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/88ded576-ed7d-4979-b102-b940218d5db2/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA Secure Infrastructure Specialist, CSIS"
+    detail: "Stackable, Oct 2026"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/53ce50cb-7cde-4eb6-b8df-b78b2a895c7f/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA Security Analytics Professional, CSAP"
+    detail: "Stackable, Oct 2026"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/20da98ca-8a11-4c26-a546-08fce2b329af/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA A+ ce"
+    detail: "May 2023, expires Oct 2029"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/6ac6c10d-a9b5-4c80-af2a-1156dcb08967/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA Network+ ce"
+    detail: "Oct 2023, expires Oct 2029"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/e99fdcb9-21f8-4f81-bb3d-91c1c9ba9cd1/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "CompTIA IT Operations Specialist, CIOS"
+    detail: "Stackable, Oct 2023"
+    issuer: "CompTIA"
+    verify_url: "https://www.credly.com/badges/cf4e545c-909b-48a6-8d90-5e27f2e277e6/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "ISC2 Certified in Cybersecurity, CC"
+    detail: "May 2026"
+    issuer: "ISC2"
+    verify_url: "https://www.credly.com/badges/328af478-9442-4b57-be4e-05743939171c/linked_in_profile"
+    verify_label: "Verify on Credly"
+  - name: "Microsoft Certified: Azure Fundamentals"
+    detail: "Dec 2023"
+    issuer: "Microsoft"
+    verify_url: "https://learn.microsoft.com/api/credentials/share/en-us/LandonBeard-8983/A54D0743CBA4A82B?sharingId"
+    verify_label: "Verify on Microsoft Learn"
+  - name: "HDI Customer Service Representative"
+    detail: "Oct 2025"
+    issuer: "HDI"
+  - name: "Coding Boot Camp Certificate, UT Austin"
+    detail: "Jun 2024"
+    issuer: "The University of Texas at Austin"
+  - name: "Databricks Generative AI Fundamentals"
+    detail: "Oct 2026"
+    issuer: "Databricks"
+    verify_url: "https://credentials.databricks.com/87c6980f-ba79-4e67-a40b-afd0e3029c2b"
+    verify_label: "Verify credential"
+  - name: "Databricks AI Agent Fundamentals"
+    detail: "Oct 2026"
+    issuer: "Databricks"
+    verify_url: "https://credentials.databricks.com/7da74bd0-5f47-4c93-b23c-72a7f54969da"
+    verify_label: "Verify credential"
+
+# span is shown in the Case File skin's log line.
+jobs:
+  - employer: "Stan Weaver North and Central Florida, Tampa, FL"
+    short: "Stan Weaver"
+    span: "Nov 2024 — Present"
+    roles:
+      - titles:
+          - name: "IT Specialist II"
+            dates: "Nov 2024 - Present"
+        bullets:
+          - "Provide advanced technical support for end users across hardware, software, and network issues, resolving escalated problems through methodical root-cause analysis."
+          - "Administer Active Directory user accounts, group memberships, and access permissions."
+          - "Design and build Python automation (FastAPI, SQLite) with document processing and PII redaction, deployed as a self-restarting Windows service."
+      - titles:
+          - name: "IT Specialist"
+            dates: "Jul 2023 - Nov 2024"
+        bullets:
+          - "Delivered frontline IT support for hardware, software, and connectivity issues."
+          - "Performed system setup, configuration, and routine maintenance."
+          - "Documented solutions to support team knowledge sharing."
+  - employer: "Christian Life Fellowship, Cape Coral, FL"
+    span: "May 2022 — Jun 2023"
+    roles:
+      - titles:
+          - name: "Tech Director"
+            dates: "May 2022 - Jun 2023"
+        bullets:
+          - "Led technology operations, including live production systems, for weekly services and events."
+          - "Coordinated technical volunteers and event technology needs."
+          - "Resolved technical issues in real time to keep services running smoothly."
+  - employer: "Grace Family Church, Tampa, FL"
+    span: "Nov 2015 — Jun 2022"
+    roles:
+      - titles:
+          - name: "Tech Lead"
+            dates: "Sep 2021 - Jun 2022"
+          - name: "Live Video Tech"
+            dates: "Nov 2015 - Jun 2022"
+        bullets:
+          - "Led the live video production tech team."
+          - "Operated and maintained live video production equipment for weekly services and events across six-plus years."
+          - "Troubleshot AV issues in real time during live productions."
+
+# The first project is shown as the featured card on the Classic skin.
+projects:
+  - eyebrow: "Home Lab"
+    icon: "network"
+    title: "Firewall, DNS, and Infrastructure Security"
+    meta: "OPNsense | AdGuard | Hyper-V | Self-hosted, ongoing"
+    bullets:
+      - "Protect the whole house with OPNsense as the firewall, with redundant firewall and DNS setups."
+      - "Use AdGuard for DNS blocking across the home network."
+      - "Run a Hyper-V server hosting an Uptime Kuma monitor and a domain controller for local Active Directory testing."
+      - "Host local services behind that protection, including a Jellyfin server for local media and a server with a 1080 Ti for local AI testing and tinkering."
+      - "High Availability Networking: Designed and deployed a highly available OPNsense firewall cluster utilizing CARP for seamless failover, integrated with Tailscale VPN for secure remote access."
+      - "Enterprise Virtualization &amp; DR: Administer a Microsoft Hyper-V environment hosting headless Linux servers and Docker containers, utilizing Veeam Backup &amp; Replication for comprehensive Disaster Recovery (DR) and automated backups."
+  - eyebrow: "Live Defensive Honeypot"
+    icon: "radar"
+    title: "T-Pot Honeypot, Attack Telemetry"
+    meta: "Oracle Cloud Always Free | T-Pot, Cowrie, Tanner | Oct 2026 - Present"
+    bullets:
+      - "Deployed a T-Pot honeypot on an isolated Oracle Cloud Always Free virtual machine, with only decoy services exposed to the internet."
+      - "Collects real SSH, SQL, SIP, and HTTP attack telemetry through Cowrie, Dionaea, Sentrypeer, and Tanner, with an attack map showing source countries and service types."
+      - "Logged 149,551 attacks in 24 hours as of October 30, 2026, up from 3,292 on October 28, 2026, with counts and trends shared only in sanitized form, no source IPs or payloads published."
+  - eyebrow: "Offensive Security Practice"
+    icon: "target"
+    title: "Hack The Box Labs"
+    meta: "May 2026 - Present"
+    bullets:
+      - "Practical training in vulnerability assessment, network enumeration, and privilege escalation using Kali Linux tooling."
+      - "Bash and PowerShell scripting to automate reconnaissance and interact with target systems."
+      - "Translating offensive security findings into defensive strategies for enterprise networks."
+      - "BSides Tampa CTF (11th Place): Competed in the BSides Tampa Capture The Flag competition, demonstrating practical offensive security, enumeration, and exploitation skills under pressure to secure an 11th place overall team finish. The team pwned 19 of 24 flags, and Beard98 was named Team MVP."
+  - eyebrow: "Open Source Security Tool"
+    icon: "lantern"
+    title: "Lantern, Home Network Scanner"
+    meta: "Python, stdlib only | Open source, MIT | Oct 2026 - Present"
+    bullets:
+      - "Built from scratch a local-first scanner that finds devices on a private home network, flags risky open ports in plain English, and shows what changed since the last scan."
+      - "Defensive only and local-first: private subnets only, no brute force or exploits, with results staying in a local SQLite file with scan history and diff."
+      - "Command line first with a local web dashboard, named network scopes, and trusted-device labels stored by MAC address."
+      - "Ready for use now, and still being updated."
+    link_url: "https://github.com/DarthBitBeard/Lantern"
+    link_label: "View Lantern on GitHub"
+
+volunteering:
+  - eyebrow: "Volunteer Leadership"
+    icon: "heart"
+    title: "Folding@Home, Team SpringHill_Folders"
+    meta: "Team Lead | Mar 2026 - Present"
+    bullets:
+      - "Founded and manage Team SpringHill_Folders (#1068033), a multi-node distributed computing team (Ubuntu Linux and Windows nodes) supporting protein-folding research at the Washington University School of Medicine, coordinating resources to maximize points-per-day (PPD) and team ranking."
+      - "Tune GPU and CPU workloads and thermal profiles for 24/7 high-uptime contribution while maintaining hardware longevity."
+      - "Reached 220,000,000 points on October 29, 2026, certified by Folding@home."
+    link_url: "https://landonbeard.beardlab.us/SpringHill_Folders/"
+    link_label: "Visit the SpringHill Folders team page"
+  - eyebrow: "Pro Bono IT"
+    icon: "hands"
+    title: "Catchafire, Pro Bono IT Volunteer"
+    meta: "Oct 2026 - Present"
+    bullets:
+      - "Exploring pro bono IT and website support opportunities for nonprofit organizations through Catchafire."
+
+# Write items as they read mid-sentence; the first letter is capitalized where needed.
+skills:
+  - group: "Security"
+    items: ["network security", "information security", "vulnerability assessment", "vulnerability management", "incident response", "identity and access management", "penetration testing (lab)", "Kali Linux", "firewall and DNS filtering"]
+  - group: "Systems and Support"
+    items: ["Active Directory", "Windows Server", "Office 365", "Hyper-V", "network administration", "firewalls", "remote troubleshooting", "hardware support"]
+  - group: "Scripting and Development"
+    items: ["Python", "FastAPI", "PowerShell", "Bash", "SQL", "SQLite", "JavaScript", "React", "Node.js", "HTML"]
+  - group: "Cloud"
+    items: ["Microsoft Azure"]
+
+education:
+  - school: "Southeastern University"
+    years: "2020 - 2021"
+  - school: "Hillsborough College"
+    years: "2016 - 2018"

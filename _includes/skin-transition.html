@@ -1,0 +1,67 @@
+{%- comment -%}
+Skin transition overlays. include.skin is the skin of the current page.
+  #skinExit   plays on this page when leaving for the other skin.
+  #skinArrive plays on this page right after arriving from the other skin.
+The last frame of an exit matches the first frame of the arrival on the other
+page, so the page change happens behind identical screens.
+{%- endcomment -%}
+{%- assign p = site.data.resume.person -%}
+{%- capture cf_content -%}
+  <span class="sk-corner sk-corner--tl"></span><span class="sk-corner sk-corner--tr"></span><span class="sk-corner sk-corner--bl"></span><span class="sk-corner sk-corner--br"></span>
+  <div class="sk-cf-content">
+    <p class="sk-eyebrow"><span class="sk-rec"></span>Secure terminal // Restricted</p>
+    <p class="sk-name" data-final="{{ p.name | upcase }}">{{ p.name | upcase }}</p>
+    <p class="sk-role">Subject dossier // {{ p.title }} // {{ p.field }}</p>
+    <ol class="sk-log">
+      <li style="--d: 0.65s"><span class="sk-cmd">Establishing secure channel</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li style="--d: 0.92s"><span class="sk-cmd">Verifying clearance</span><span class="sk-dots"></span><span class="sk-ok">Granted</span></li>
+      <li style="--d: 1.19s"><span class="sk-cmd">Decrypting case file</span><span class="sk-dots"></span><span class="sk-ok">Done</span></li>
+    </ol>
+    <div class="sk-progress"><div class="sk-bar"><span class="sk-fill"></span></div><span class="sk-pct">000%</span></div>
+  </div>
+  <div class="sk-stamp"><span>Access granted</span></div>
+{%- endcapture -%}
+{%- capture paper_content -%}
+  <div class="sk-paper-content">
+    <p class="sk-p-eyebrow">Portfolio</p>
+    <p class="sk-p-name">{{ p.name }}</p>
+    <p class="sk-p-sub">{{ p.title }} &middot; {{ p.field }}</p>
+    <div class="sk-p-bar"><span></span></div>
+  </div>
+{%- endcapture -%}
+
+{%- if include.skin == "classic" %}
+<div class="sk sk-x sk-x--casefile" id="skinExit" data-target="casefile" aria-hidden="true" hidden>
+  <div class="sk-iris"></div>
+  <div class="sk-gridlines"></div>
+  <div class="sk-scan"></div>
+  {{ cf_content }}
+  <p class="sk-skip">Click or press any key to skip</p>
+</div>
+<div class="sk sk-a sk-a--classic" id="skinArrive" aria-hidden="true">
+  <div class="sk-paper">{{ paper_content }}</div>
+</div>
+{%- else %}
+<div class="sk sk-x sk-x--classic" id="skinExit" data-target="classic" aria-hidden="true" hidden>
+  <div class="sk-paper">{{ paper_content }}</div>
+  <div class="sk-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="sk-scan"></div>
+  <div class="sk-close-content">
+    <p class="sk-eyebrow"><span class="sk-rec"></span>Case file // Closing</p>
+    <p class="sk-name sk-name--sm">Declassifying</p>
+    <ol class="sk-log">
+      <li style="--d: 0.3s"><span class="sk-cmd">Review complete</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li style="--d: 0.52s"><span class="sk-cmd">Lifting redactions</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li style="--d: 0.74s"><span class="sk-cmd">Releasing public record</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+    </ol>
+  </div>
+  <p class="sk-skip">Click or press any key to skip</p>
+</div>
+<div class="sk sk-a sk-a--casefile" id="skinArrive" aria-hidden="true">
+  <div class="sk-shutter sk-shutter--top"></div>
+  <div class="sk-shutter sk-shutter--bottom"></div>
+  <span class="sk-seam"></span>
+  {{ cf_content }}
+</div>
+{%- endif %}
+<p class="sk-sr" id="skinStatus" role="status" aria-live="polite"></p>

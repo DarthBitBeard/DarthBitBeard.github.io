@@ -1,0 +1,11 @@
+# GitHub Pages builds this site with Jekyll. Content lives in _data/resume.yml.
+title: "Landon Beard | IT Specialist II, Cybersecurity"
+description: "Resume and security projects for Landon Beard, IT Specialist II with CompTIA CySA+, Security+, Network+, A+, and ISC2 Certified in Cybersecurity."
+url: "https://landonbeard.beardlab.us"
+baseurl: ""
+timezone: America/New_York
+
+exclude:
+  - README.md
+  - CNAME
+  - tools/
