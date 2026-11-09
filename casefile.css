@@ -708,21 +708,45 @@ footer { padding: 30px 0 38px; }
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: #f4f7fb;
-  color: #0b1f3a;
-  text-align: center;
-  padding: 24px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
   pointer-events: none;
 }
 .skin-loader.show { opacity: 1; visibility: visible; pointer-events: auto; }
+.loader-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 24px;
+}
+.loader-theme-light { background: #f4f7fb; color: #0b1f3a; }
+.loader-theme-light .loader-eyebrow { color: #0b1f3a; }
+.loader-theme-light .loader-sub { color: rgba(11, 31, 58, 0.7); }
+.loader-theme-light .loader-track { background: rgba(11, 31, 58, 0.15); }
+.loader-theme-dark { background: #0b1f3a; color: #f4f7fb; }
+.loader-theme-dark .loader-eyebrow { color: #ffb020; }
+.loader-theme-dark .loader-sub { color: rgba(244, 247, 251, 0.75); }
+.loader-theme-dark .loader-track { background: rgba(244, 247, 251, 0.2); }
+.loader-dest { clip-path: inset(0 100% 0 0); }
+.skin-loader.show .loader-dest { animation: loader-wipe 0.45s ease-in-out 0.3s forwards; }
+.loader-wipe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: #ffb020;
+  box-shadow: 0 0 14px rgba(255, 176, 32, 0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+.skin-loader.show .loader-wipe { animation: loader-wipe-edge 0.45s ease-in-out 0.3s forwards; }
 .loader-eyebrow {
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -744,6 +768,7 @@ footer { padding: 30px 0 38px; }
   color: #ffb020;
   animation: loader-blink 0.8s steps(1) infinite;
 }
+.loader-title-static::after { content: none; }
 .loader-sub { font-size: 0.9rem; color: rgba(11, 31, 58, 0.7); margin: 0; }
 .loader-track {
   width: min(320px, 70vw);
@@ -762,6 +787,14 @@ footer { padding: 30px 0 38px; }
   transition: width 0.9s ease;
 }
 @keyframes loader-blink { 50% { opacity: 0; } }
+@keyframes loader-wipe { to { clip-path: inset(0 0 0 0); } }
+@keyframes loader-wipe-edge {
+  0% { left: 0; opacity: 1; }
+  90% { left: 100%; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
 @media (prefers-reduced-motion: reduce) {
   .loader-title::after { animation: none; }
+  .skin-loader.show .loader-dest,
+  .skin-loader.show .loader-wipe { animation: none; }
 }
