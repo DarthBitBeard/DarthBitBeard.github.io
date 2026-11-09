@@ -138,6 +138,17 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
   cursor: pointer;
 }
 .theme-toggle:hover { background: var(--hover-bg); }
+.skin-switch {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 980px;
+  color: var(--text);
+  font-size: 0.85rem;
+  padding: 7px 14px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.skin-switch:hover { background: var(--hover-bg); }
 
 .hero { position: relative; padding: 88px 0 64px; background: var(--bg); overflow: hidden; }
 .blob {
@@ -317,6 +328,19 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
 .cert-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: rgba(0, 113, 227, 0.35); }
 .cert-feature { grid-column: span 2; background: linear-gradient(135deg, var(--feature-tint), var(--card)); border-color: rgba(0, 113, 227, 0.25); }
 .cert-card h3 { margin: 0 0 6px; font-size: 1.02rem; line-height: 1.35; letter-spacing: -0.01em; }
+.cert-badge {
+  display: inline-block;
+  vertical-align: middle;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 980px;
+  padding: 3px 9px;
+  margin-left: 6px;
+}
 .cert-card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
 .cert-verify { display: inline-block; margin-top: 10px; font-size: 0.88rem; font-weight: 600; }
 
@@ -439,7 +463,7 @@ footer { padding: 28px 0 36px; background: var(--bg); }
 }
 @media (max-width: 620px) {
   .nav-links { display: none; }
-  .nav-inner { gap: 16px; }
+  .nav-inner { gap: 16px; flex-wrap: wrap; }
   .nav-cta { margin-left: auto; }
   .cert-grid { grid-template-columns: 1fr; }
   .cert-feature { grid-column: span 1; }

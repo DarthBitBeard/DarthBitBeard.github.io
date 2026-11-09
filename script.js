@@ -24,6 +24,13 @@
     });
   }
 
+  var skinLinks = document.querySelectorAll("[data-skin-link]");
+  skinLinks.forEach(function (link) {
+    link.addEventListener("click", function () {
+      try { localStorage.setItem("lb-skin", link.getAttribute("data-skin-link")); } catch (e) {}
+    });
+  });
+
   function onScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
     if (nav) {
