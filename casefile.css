@@ -733,20 +733,13 @@ footer { padding: 30px 0 38px; }
 .loader-theme-dark .loader-eyebrow { color: #ffb020; }
 .loader-theme-dark .loader-sub { color: rgba(244, 247, 251, 0.75); }
 .loader-theme-dark .loader-track { background: rgba(244, 247, 251, 0.2); }
-.loader-dest { clip-path: inset(0 100% 0 0); }
-.skin-loader.show .loader-dest { animation: loader-wipe 0.45s ease-in-out 0.3s forwards; }
-.loader-wipe {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background: #ffb020;
-  box-shadow: 0 0 14px rgba(255, 176, 32, 0.8);
-  opacity: 0;
-  pointer-events: none;
-}
-.skin-loader.show .loader-wipe { animation: loader-wipe-edge 0.45s ease-in-out 0.3s forwards; }
+.loader-dest { opacity: 0; }
+.skin-loader.show .loader-dest { animation: loader-dest-in 0.5s ease 0.25s forwards; }
+.skin-loader.show .loader-source { animation: loader-source-out 0.3s ease 0.3s forwards; }
+.skin-loader.show .loader-dest .loader-eyebrow { animation: loader-rise 0.35s ease-out 0.32s both; }
+.skin-loader.show .loader-dest .loader-title { animation: loader-rise 0.35s ease-out 0.39s both; }
+.skin-loader.show .loader-dest .loader-sub { animation: loader-rise 0.35s ease-out 0.46s both; }
+.skin-loader.show .loader-dest .loader-track { animation: loader-rise 0.35s ease-out 0.53s both; }
 .loader-eyebrow {
   font-family: var(--mono);
   font-size: 0.72rem;
@@ -787,14 +780,23 @@ footer { padding: 30px 0 38px; }
   transition: width 0.9s ease;
 }
 @keyframes loader-blink { 50% { opacity: 0; } }
-@keyframes loader-wipe { to { clip-path: inset(0 0 0 0); } }
-@keyframes loader-wipe-edge {
-  0% { left: 0; opacity: 1; }
-  90% { left: 100%; opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+@keyframes loader-dest-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes loader-source-out {
+  to { opacity: 0; transform: scale(1.03) translateY(-6px); }
+}
+@keyframes loader-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .loader-title::after { animation: none; }
+  .skin-loader.show .loader-source,
   .skin-loader.show .loader-dest,
-  .skin-loader.show .loader-wipe { animation: none; }
+  .skin-loader.show .loader-dest .loader-eyebrow,
+  .skin-loader.show .loader-dest .loader-title,
+  .skin-loader.show .loader-dest .loader-sub,
+  .skin-loader.show .loader-dest .loader-track { animation: none; }
 }
