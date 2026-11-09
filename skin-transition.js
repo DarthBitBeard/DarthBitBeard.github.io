@@ -112,6 +112,7 @@
 
     setOrigin(el, opts && opts.origin);
     el.hidden = false;
+    el.setAttribute("aria-hidden", "true");
     void el.offsetWidth;
     el.classList.add("is-active");
     root.style.overflow = "hidden";

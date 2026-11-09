@@ -342,3 +342,11 @@ html.sk-arriving .sk-a--classic .sk-paper { animation: sk-wipe-up 0.7s cubic-bez
   .sk-a { display: none !important; }
 }
 @media print { .sk { display: none !important; } }
+
+/* Typing order for the terminal lines (was inline style attributes, blocked by the CSP). */
+.sk-cf-content .sk-log li:nth-child(1) { --d: 0.65s; }
+.sk-cf-content .sk-log li:nth-child(2) { --d: 0.92s; }
+.sk-cf-content .sk-log li:nth-child(3) { --d: 1.19s; }
+.sk-close-content .sk-log li:nth-child(1) { --d: 0.3s; }
+.sk-close-content .sk-log li:nth-child(2) { --d: 0.52s; }
+.sk-close-content .sk-log li:nth-child(3) { --d: 0.74s; }

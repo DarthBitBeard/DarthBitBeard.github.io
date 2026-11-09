@@ -5,7 +5,13 @@ url: "https://landonbeard.beardlab.us"
 baseurl: ""
 timezone: America/New_York
 
+# Jekyll skips dot-folders by default; security.txt lives in one.
+include:
+  - .well-known
+
 exclude:
   - README.md
   - CNAME
   - tools/
+  - .github/
+  - .gitattributes

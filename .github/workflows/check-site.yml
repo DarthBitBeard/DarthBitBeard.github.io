@@ -1,0 +1,52 @@
+name: Check site
+
+# Builds the site the same way GitHub Pages does and checks every link and
+# image on the built pages, so a broken data file or link is caught on the
+# pull request instead of silently stopping the live site from updating.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 13 * * 1" # weekly, to catch external links that went dead
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build with Jekyll (same builder as GitHub Pages)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Check that key pages were built
+        run: |
+          for f in index.html casefile.html 404.html robots.txt sitemap.xml .well-known/security.txt; do
+            test -s "_site/$f" || { echo "::error::_site/$f is missing or empty"; exit 1; }
+          done
+          if grep -R --include='*.html' -l '{{\|{%' _site; then
+            echo "::error::Unrendered Liquid tags found in the built HTML"; exit 1
+          fi
+
+      - name: Check links and images
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: true
+          args: >-
+            --root-dir "${{ github.workspace }}/_site"
+            --no-progress
+            --max-retries 3
+            --accept 200,206,429,999
+            --exclude-path _site/.well-known
+            --exclude "^mailto:"
+            --exclude "linkedin\.com"
+            --exclude "landonbeard\.beardlab\.us/\.well-known"
+            "_site/**/*.html"

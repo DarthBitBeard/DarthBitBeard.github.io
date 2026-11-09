@@ -1,0 +1,9 @@
+{%- comment -%}
+Content-Security-Policy. GitHub Pages cannot send HTTP security headers, so the
+policy is set with a meta tag. It must come before any script or stylesheet.
+Everything is served from this site; data: images are the CSS noise textures.
+JSON data blocks (ld+json, eggData) are not executed, so they are not affected.
+frame-ancestors cannot be set from a meta tag.
+{%- endcomment -%}
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">

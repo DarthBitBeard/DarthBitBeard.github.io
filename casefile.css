@@ -4,11 +4,13 @@
   --panel-2: #141414;
   --text: #f2f2f0;
   --muted: #9a9a9a;
-  --dim: #6e6e6e;
+  --dim: #858585;
   --line: rgba(255, 255, 255, 0.12);
   --line-soft: rgba(255, 255, 255, 0.07);
   --accent: #ff3b30;
   --accent-dim: rgba(255, 59, 48, 0.85);
+  /* Darker red behind white text (4.8:1). --accent stays for red text on black. */
+  --accent-fill: #d92d20;
   --serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -38,7 +40,7 @@ body {
 a { color: var(--text); }
 a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-::selection { background: var(--accent); color: #fff; }
+::selection { background: var(--accent-fill); color: #fff; }
 
 .skip-link {
   position: absolute;
@@ -154,7 +156,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
   white-space: nowrap;
   transition: background 0.2s ease, color 0.2s ease;
 }
-.nav-cta:hover { background: var(--accent); color: #fff; }
+.nav-cta:hover { background: var(--accent-fill); border-color: var(--accent-fill); color: #fff; }
 
 /* Mobile menu button: hidden on wide screens, shown under 620px. */
 .menu-toggle {
@@ -266,7 +268,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary { background: var(--accent-fill); color: #fff; }
 .btn-primary:hover { background: #ff5147; }
 .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
 .btn-ghost:hover { border-color: var(--text); }
@@ -530,7 +532,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
 .cert-badge {
   display: inline-block;
   vertical-align: middle;
-  background: var(--accent);
+  background: var(--accent-fill);
   color: #fff;
   font-family: var(--mono);
   font-size: 0.62rem;
@@ -644,7 +646,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
-.decrypt:hover { background: var(--accent); color: #fff; border-style: solid; }
+.decrypt:hover { background: var(--accent-fill); border-color: var(--accent-fill); color: #fff; border-style: solid; }
 .decrypt:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .evidence:not(.redacted) .decrypt { border-color: var(--line); color: var(--muted); }
 .evidence:not(.redacted) .decrypt:hover { background: transparent; color: var(--text); border-color: var(--text); }
@@ -668,7 +670,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
   top: 26px;
   right: -36px;
   padding: 4px 44px;
-  background: var(--accent);
+  background: var(--accent-fill);
   color: #fff;
   font-family: var(--mono);
   font-size: 0.6rem;
@@ -679,7 +681,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
 }
 .evidence:not(.redacted)::after { content: "DECLASSIFIED"; background: #2a2a2a; color: var(--muted); }
 .board-btn--all { margin-left: auto; border-color: var(--accent); color: var(--accent); }
-.board-btn--all:hover { background: var(--accent); color: #fff; }
+.board-btn--all:hover { background: var(--accent-fill); border-color: var(--accent-fill); color: #fff; }
 
 /* Hero name decodes on load (casefile.js). */
 .decode { display: inline-block; }
@@ -837,3 +839,18 @@ html.sk-arriving .hero .reveal { transition-delay: calc(0.9s + var(--i, 0) * 90m
   .evidence li { background: none !important; }
   .decrypt, .board-controls, .evidence::after, .photo-frame .scanline { display: none !important; }
 }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: -1px; }
+h2.section-label { font-weight: 400; }
+
+/* ---------- Without JavaScript: show everything, drop controls that need it ---------- */
+html:not(.js) .reveal { opacity: 1 !important; transform: none !important; }
+html:not(.js) .evidence.redacted li { color: var(--muted); background-size: 0% 100%; }
+html:not(.js) .evidence.redacted .project-link { visibility: visible; }
+html:not(.js) .decrypt, html:not(.js) .evidence::after, html:not(.js) .board-btn--all, html:not(.js) .menu-toggle { display: none; }
+@media (max-width: 620px) {
+  html:not(.js) .nav-inner { flex-wrap: wrap; padding-bottom: 8px; }
+  html:not(.js) .nav-links { display: flex; position: static; flex-direction: row; flex-wrap: wrap; gap: 4px 16px; width: 100%; padding: 0; border: 0; }
+  html:not(.js) .nav-links a { padding: 6px 0; border: 0; }
+}
+.volunteer-grid > :only-child { grid-column: 1 / -1; }

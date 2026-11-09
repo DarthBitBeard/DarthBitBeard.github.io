@@ -13,9 +13,9 @@ page, so the page change happens behind identical screens.
     <p class="sk-name" data-final="{{ p.name | upcase }}">{{ p.name | upcase }}</p>
     <p class="sk-role">Subject dossier // {{ p.title }} // {{ p.field }}</p>
     <ol class="sk-log">
-      <li style="--d: 0.65s"><span class="sk-cmd">Establishing secure channel</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
-      <li style="--d: 0.92s"><span class="sk-cmd">Verifying clearance</span><span class="sk-dots"></span><span class="sk-ok">Granted</span></li>
-      <li style="--d: 1.19s"><span class="sk-cmd">Decrypting case file</span><span class="sk-dots"></span><span class="sk-ok">Done</span></li>
+      <li><span class="sk-cmd">Establishing secure channel</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li><span class="sk-cmd">Verifying clearance</span><span class="sk-dots"></span><span class="sk-ok">Granted</span></li>
+      <li><span class="sk-cmd">Decrypting case file</span><span class="sk-dots"></span><span class="sk-ok">Done</span></li>
     </ol>
     <div class="sk-progress"><div class="sk-bar"><span class="sk-fill"></span></div><span class="sk-pct">000%</span></div>
   </div>
@@ -31,7 +31,7 @@ page, so the page change happens behind identical screens.
 {%- endcapture -%}
 
 {%- if include.skin == "classic" %}
-<div class="sk sk-x sk-x--casefile" id="skinExit" data-target="casefile" aria-hidden="true" hidden>
+<div class="sk sk-x sk-x--casefile" id="skinExit" data-target="casefile" hidden>
   <div class="sk-iris"></div>
   <div class="sk-gridlines"></div>
   <div class="sk-scan"></div>
@@ -42,7 +42,7 @@ page, so the page change happens behind identical screens.
   <div class="sk-paper">{{ paper_content }}</div>
 </div>
 {%- else %}
-<div class="sk sk-x sk-x--classic" id="skinExit" data-target="classic" aria-hidden="true" hidden>
+<div class="sk sk-x sk-x--classic" id="skinExit" data-target="classic" hidden>
   <div class="sk-paper">{{ paper_content }}</div>
   <div class="sk-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="sk-scan"></div>
@@ -50,9 +50,9 @@ page, so the page change happens behind identical screens.
     <p class="sk-eyebrow"><span class="sk-rec"></span>Case file // Closing</p>
     <p class="sk-name sk-name--sm">Declassifying</p>
     <ol class="sk-log">
-      <li style="--d: 0.3s"><span class="sk-cmd">Review complete</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
-      <li style="--d: 0.52s"><span class="sk-cmd">Lifting redactions</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
-      <li style="--d: 0.74s"><span class="sk-cmd">Releasing public record</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li><span class="sk-cmd">Review complete</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li><span class="sk-cmd">Lifting redactions</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
+      <li><span class="sk-cmd">Releasing public record</span><span class="sk-dots"></span><span class="sk-ok">OK</span></li>
     </ol>
   </div>
   <p class="sk-skip">Click or press any key to skip</p>
