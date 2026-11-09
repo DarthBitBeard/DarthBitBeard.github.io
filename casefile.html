@@ -1,27 +1,42 @@
+---
+# Hidden "Case File" skin. Content comes from _data/resume.yml.
+# noindex keeps this duplicate of the main page out of search results.
+noindex: true
+---
+{%- assign r = site.data.resume -%}
+{%- assign p = r.person -%}
+{%- assign v = site.time | date: '%s' -%}
+{%- assign today = site.time | date: '%Y-%m-%d' -%}
+{%- assign first_name = p.name | split: ' ' | first -%}
+{%- assign last_name = p.name | split: ' ' | last -%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Landon Beard | IT Specialist II, Cybersecurity</title>
-<meta name="description" content="Resume and security projects for Landon Beard, IT Specialist II with CompTIA CySA+, Security+, Network+, A+, and ISC2 Certified in Cybersecurity.">
+{% include meta.html %}
 <meta name="color-scheme" content="dark">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script>try{if(localStorage.getItem("lb-skin")==="classic"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("index.html");}}catch(e){}</script>
-<link rel="stylesheet" href="casefile.css?v=7">
-<script src="casefile.js?v=7" defer></script>
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preload" href="fonts/playfair-display-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>try{if(localStorage.getItem("lb-skin")==="classic"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("./");}else if(sessionStorage.getItem("lb-arrive")==="casefile"){sessionStorage.removeItem("lb-arrive");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("sk-arriving");}}}catch(e){}</script>
+<link rel="stylesheet" href="fonts/fonts.css?v={{ v }}">
+<link rel="stylesheet" href="casefile.css?v={{ v }}">
+<link rel="stylesheet" href="skin-transition.css?v={{ v }}">
+<script src="skin-transition.js?v={{ v }}" defer></script>
+<script src="casefile.js?v={{ v }}" defer></script>
 </head>
 <body>
+{% include skin-transition.html skin="casefile" %}
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
 <header class="nav" id="topNav">
   <nav class="nav-inner" aria-label="Main navigation">
-    <a class="logo" href="#top">LB <span>// CASE FILE 2026</span></a>
-    <div class="nav-links">
+    <a class="logo" href="#top">LB <span>// CASE FILE {{ site.time | date: '%Y' }}</span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu"><span class="menu-icon" aria-hidden="true"></span></button>
+    <div class="nav-links" id="navLinks">
       <a href="#about">Profile</a>
       <a href="#certifications">Credentials</a>
       <a href="#experience">Operations</a>
@@ -30,27 +45,10 @@
       <a href="#contact">Contact</a>
     </div>
     <p class="hud-time" aria-hidden="true"><span class="rec-dot"></span>REC <span id="timecode">00:00:00:00</span></p>
-    <a class="nav-cta" href="mailto:lanbeard105@gmail.com">Initiate contact</a>
+    <a class="nav-cta" href="mailto:{{ p.email }}">Initiate contact</a>
   </nav>
 </header>
 
-<div class="skin-loader" id="skinLoader" aria-hidden="true" style="display:none">
-  <div class="loader-half loader-source loader-theme-dark">
-    <p class="loader-eyebrow">Landon Beard // Dossier</p>
-    <p class="loader-split-name">Case File</p>
-  </div>
-  <div class="loader-half loader-dest loader-theme-light">
-    <p class="loader-eyebrow">Landon Beard // Portfolio</p>
-    <p class="loader-split-name">Classic</p>
-  </div>
-  <span class="loader-divider" aria-hidden="true"></span>
-  <div class="loader-full loader-theme-light">
-    <p class="loader-eyebrow">Landon Beard // Portfolio</p>
-    <p class="loader-title">Returning to Classic</p>
-    <p class="loader-sub">IT Specialist II. Cybersecurity.</p>
-    <div class="loader-track"><span class="loader-fill"></span></div>
-  </div>
-</div>
 
 <main id="main">
   <section class="hero" id="top">
@@ -60,37 +58,36 @@
     <div class="corner br" aria-hidden="true">+</div>
     <div class="wrap hero-grid">
       <div class="hero-file" aria-label="File data">
-        <p><span>FILE</span> LANDON BEARD</p>
-        <p><span>CLASS</span> IT_SPECIALIST_II</p>
-        <p><span>FIELD</span> CYBERSECURITY</p>
+        <p><span>FILE</span> {{ p.name | upcase }}</p>
+        <p><span>CLASS</span> {{ p.title | upcase | replace: ' ', '_' }}</p>
+        <p><span>FIELD</span> {{ p.field | upcase }}</p>
         <p><span>SECTOR</span> TAMPA BAY, FL</p>
         <p><span>STATUS</span> <b class="accent">FILE ACTIVE</b></p>
-        <p><span>UPDATED</span> NOV 2026</p>
+        <p><span>UPDATED</span> {{ site.time | date: '%b %Y' | upcase }}</p>
       </div>
       <div class="hero-center">
-        <p class="eyebrow reveal">IT Specialist II &mdash; Cybersecurity</p>
-        <h1 class="reveal">Landon<br><em>Beard</em></h1>
-        <p class="hero-sub reveal">A decade of technical experience, from corporate IT support to live production technology. Calm under pressure, clear with non-technical users, and methodical about root cause.</p>
+        <p class="eyebrow reveal">{{ p.title }} &mdash; {{ p.field }}</p>
+        <h1 class="reveal" aria-label="{{ p.name }}"><span class="decode" data-final="{{ first_name }}" aria-hidden="true">{{ first_name }}</span><br><em class="decode" data-final="{{ last_name }}" aria-hidden="true">{{ last_name }}</em></h1>
+        <p class="hero-sub reveal">{{ p.tagline }}</p>
         <div class="hero-ctas reveal">
           <a class="btn btn-primary" href="#projects">View the evidence</a>
           <a class="btn btn-ghost" href="#experience">Field operations</a>
-          <a class="btn btn-ghost" href="Landon_Beard_Resume.pdf" download>Download resume (PDF)</a>
+          <a class="btn btn-ghost" href="{{ p.resume_pdf }}" download>Download resume (PDF)</a>
         </div>
         <ul class="hero-pills reveal" aria-label="Key certifications">
-          <li>CompTIA CySA+</li>
-          <li>CompTIA Security+</li>
-          <li>ISC2 Certified in Cybersecurity</li>
-          <li>Microsoft Azure Fundamentals</li>
+          {%- for pill in r.hero_pills %}
+          <li>{{ pill }}</li>
+          {%- endfor %}
         </ul>
       </div>
       <div class="hero-side">
         <figure class="photo-card reveal" id="photoCard">
-          <div class="photo-frame">
-            <img src="photo.jpg" alt="Landon Beard" width="800" height="1000" fetchpriority="high">
+          <div class="photo-frame"><span class="scanline" aria-hidden="true"></span>
+            {% include photo.html sizes="(max-width: 1020px) min(420px, calc(100vw - 56px)), 360px" %}
           </div>
-          <figcaption>SUBJECT // FILE PHOTO &mdash; IT SPECIALIST II</figcaption>
+          <figcaption>SUBJECT // FILE PHOTO &mdash; {{ p.title | upcase }}</figcaption>
         </figure>
-        <p class="hero-coords reveal">SPRING HILL, FLORIDA<br>SIGNAL: STRONG // SYS. DIAGNOSTIC: STABLE</p>
+        <p class="hero-coords reveal">{{ p.location | upcase }}<br>SIGNAL: STRONG // SYS. DIAGNOSTIC: STABLE</p>
       </div>
     </div>
     <p class="scroll-hint reveal" aria-hidden="true">Scroll to investigate <span>&darr;</span></p>
@@ -99,18 +96,18 @@
 
   <div class="ticker" aria-label="System log">
     <div class="ticker-track">
-      <span>2026-10-31 // CYSA+ PASSED</span><span>2026-10-28 // HONEYPOT DEPLOYED</span><span>2026-10-20 // SECURITY+ PASSED</span><span>2026-10-29 // 220,000,000 FOLDING@HOME PTS</span><span>2026-10-28 // LANTERN PUBLISHED</span><span>2026-05-26 // ISC2 CC EARNED</span><span>2023-10-20 // NETWORK+ PASSED</span><span>2023-05-23 // A+ PASSED</span>
-      <span aria-hidden="true">2026-10-31 // CYSA+ PASSED</span><span aria-hidden="true">2026-10-28 // HONEYPOT DEPLOYED</span><span aria-hidden="true">2026-10-20 // SECURITY+ PASSED</span><span aria-hidden="true">2026-10-29 // 220,000,000 FOLDING@HOME PTS</span><span aria-hidden="true">2026-10-28 // LANTERN PUBLISHED</span><span aria-hidden="true">2026-05-26 // ISC2 CC EARNED</span><span aria-hidden="true">2023-10-20 // NETWORK+ PASSED</span><span aria-hidden="true">2023-05-23 // A+ PASSED</span>
+      {% for t in r.timeline %}<span>{{ t.date }} // {{ t.event }}</span>{% endfor %}
+      {% for t in r.timeline %}<span aria-hidden="true">{{ t.date }} // {{ t.event }}</span>{% endfor %}
     </div>
   </div>
 
   <section class="now" id="now" aria-label="Active cases">
     <div class="wrap">
-      <p class="section-label reveal">Active cases // 03 open</p>
+      <p class="section-label reveal">Active cases // {{ r.now.items.size | prepend: '0' | slice: -2, 2 }} open // as of <time datetime="{{ r.now.as_of | date: '%Y-%m-%d' }}">{{ r.now.as_of | date: '%b %Y' | upcase }}</time></p>
       <div class="now-grid">
-        <article class="now-item reveal"><p class="case-no">CASE 01</p><h3>CySA+ passed</h3><p>Passed the CompTIA CySA+ (CS0-004) exam on October 31, 2026. Next on the ladder: SC-300.</p></article>
-        <article class="now-item reveal"><p class="case-no">CASE 02</p><h3>Lantern ready for use</h3><p>Open source home network scanner, ready to use and still being updated. See it in the Evidence Board below.</p></article>
-        <article class="now-item reveal"><p class="case-no">CASE 03</p><h3>Honeypot live</h3><p>Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. The live dashboard stays private.</p></article>
+        {%- for item in r.now.items %}
+        <article class="now-item reveal"><p class="case-no">CASE {{ forloop.index | prepend: '0' | slice: -2, 2 }} // <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%Y-%m-%d' }}</time></p><h3>{{ item.title }}</h3><p>{{ item.text_casefile | default: item.text }}</p></article>
+        {%- endfor %}
       </div>
     </div>
   </section>
@@ -122,9 +119,9 @@
       <div class="dossier">
         <div class="dossier-col dossier-file reveal">
           <p class="dossier-head">FILE DATA</p>
-          <p><span>SUBJECT</span> Landon Beard</p>
-          <p><span>ROLE</span> IT Specialist II</p>
-          <p><span>BASE</span> Spring Hill, FL</p>
+          <p><span>SUBJECT</span> {{ p.name }}</p>
+          <p><span>ROLE</span> {{ p.title }}</p>
+          <p><span>BASE</span> {{ p.locality }}, {{ p.region }}</p>
           <p><span>FIELD TIME</span> 10+ yrs</p>
           <p><span>AT STAN WEAVER</span> 3+ yrs</p>
           <p><span>LAB UPTIME</span> 24/7</p>
@@ -132,26 +129,22 @@
         </div>
         <div class="dossier-col dossier-bio reveal">
           <p class="dossier-head">COMPETENCE ANALYSIS // READ ONLY</p>
-          <p>IT Specialist II and CompTIA CySA+ holder with a decade of technical experience spanning corporate IT support and live production technology. At Stan Weaver, provides advanced end user support, administers Active Directory, and builds Python automation that removes manual work, including document processing with PII redaction deployed as a self-restarting Windows service. Holds CompTIA CySA+, Security+, A+, and Network+, the CSAP and CSIS stackable certifications, ISC2 Certified in Cybersecurity, and Microsoft Azure Fundamentals. Outside the day job, runs a high availability home lab behind a redundant OPNsense firewall cluster with DNS filtering and automated disaster recovery, built Lantern, an open source local-first network scanner, and operates a live defensive honeypot. Also leads Team SpringHill_Folders, a distributed computing team supporting protein folding research. Focused on vulnerability management, identity and access, and detection work that holds up in production, not just in a lab.</p>
+          <p>{{ p.about }}</p>
           <div class="about-stats">
-            <p><b>6+ yrs</b> Live video production technology at Grace Family Church, leading the tech team</p>
-            <p><b>3+ yrs</b> At Stan Weaver, from IT Specialist to IT Specialist II, in Tampa, FL</p>
-            <p><b>24/7</b> Home lab and Folding@Home team running high-uptime Linux and Windows nodes</p>
+            {%- for s in r.stats %}
+            <p><b>{{ s.value }}</b> {{ s.text }}</p>
+            {%- endfor %}
           </div>
         </div>
         <div class="dossier-col dossier-kit reveal">
           <p class="dossier-head">EQUIPMENT INVENTORY</p>
-          <p class="kit-label">SECURITY</p>
-          <p class="kit-tags"><span>Network security</span><span>Vulnerability assessment</span><span>Vulnerability management</span><span>Incident response</span><span>Identity and access management</span><span>Penetration testing (lab)</span><span>Kali Linux</span><span>Firewall and DNS filtering</span></p>
-          <p class="kit-label">SYSTEMS AND SUPPORT</p>
-          <p class="kit-tags"><span>Active Directory</span><span>Windows Server</span><span>Office 365</span><span>Hyper-V</span><span>Network administration</span><span>Firewalls</span><span>Remote troubleshooting</span><span>Hardware support</span></p>
-          <p class="kit-label">SCRIPTING AND DEVELOPMENT</p>
-          <p class="kit-tags"><span>Python</span><span>FastAPI</span><span>PowerShell</span><span>Bash</span><span>SQL</span><span>SQLite</span><span>JavaScript</span><span>React</span><span>Node.js</span><span>HTML</span></p>
-          <p class="kit-label">CLOUD</p>
-          <p class="kit-tags"><span>Microsoft Azure</span></p>
+          {%- for g in r.skills %}
+          <p class="kit-label">{{ g.group | upcase }}</p>
+          <p class="kit-tags">{% for item in g.items %}<span>{{ item | slice: 0 | upcase }}{{ item | slice: 1, 200 }}</span>{% endfor %}</p>
+          {%- endfor %}
           <div class="education">
             <p class="kit-label">EDUCATION</p>
-            <p>Southeastern University | 2020 - 2021<br>Hillsborough College | 2016 - 2018</p>
+            <p>{% for e in r.education %}{{ e.school }} | {{ e.years }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</p>
           </div>
         </div>
       </div>
@@ -163,19 +156,9 @@
       <p class="section-label reveal">Credentials // Verified</p>
       <h2 class="reveal">Verified credentials, <em>led by CySA+</em></h2>
       <div class="cert-grid">
-        <article class="cert-card cert-feature reveal"><p class="file-no">FILE #01</p><h3>CompTIA CySA+ (CS0-004) <span class="cert-badge">New</span></h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/6f017276-ee83-465f-86f4-5b300eeb3a56/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #02</p><h3>CompTIA Security+ ce</h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/88ded576-ed7d-4979-b102-b940218d5db2/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #03</p><h3>CompTIA Security Analytics Professional, CSAP</h3><p>Stackable, Oct 2026</p> <a class="cert-verify" href="https://www.credly.com/badges/20da98ca-8a11-4c26-a546-08fce2b329af/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #04</p><h3>CompTIA Secure Infrastructure Specialist, CSIS</h3><p>Stackable, Oct 2026</p> <a class="cert-verify" href="https://www.credly.com/badges/53ce50cb-7cde-4eb6-b8df-b78b2a895c7f/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #05</p><h3>CompTIA A+ ce</h3><p>May 2023, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/6ac6c10d-a9b5-4c80-af2a-1156dcb08967/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #06</p><h3>CompTIA Network+ ce</h3><p>Oct 2023, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/e99fdcb9-21f8-4f81-bb3d-91c1c9ba9cd1/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #07</p><h3>CompTIA IT Operations Specialist, CIOS</h3><p>Stackable, Oct 2023</p> <a class="cert-verify" href="https://www.credly.com/badges/cf4e545c-909b-48a6-8d90-5e27f2e277e6/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #08</p><h3>ISC2 Certified in Cybersecurity, CC</h3><p>May 2026</p> <a class="cert-verify" href="https://www.credly.com/badges/328af478-9442-4b57-be4e-05743939171c/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #09</p><h3>Microsoft Certified: Azure Fundamentals</h3><p>Dec 2023</p> <a class="cert-verify" href="https://learn.microsoft.com/api/credentials/share/en-us/LandonBeard-8983/A54D0743CBA4A82B?sharingId" target="_blank" rel="noopener">Verify on Microsoft Learn</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #10</p><h3>HDI Customer Service Representative</h3><p>Oct 2025</p></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #11</p><h3>Coding Boot Camp Certificate, UT Austin</h3><p>Jun 2024</p></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #12</p><h3>Databricks Generative AI Fundamentals</h3><p>Oct 2026</p> <a class="cert-verify" href="https://credentials.databricks.com/87c6980f-ba79-4e67-a40b-afd0e3029c2b" target="_blank" rel="noopener">Verify credential</a></article>
-        <article class="cert-card reveal"><p class="file-no">FILE #13</p><h3>Databricks AI Agent Fundamentals</h3><p>Oct 2026</p> <a class="cert-verify" href="https://credentials.databricks.com/7da74bd0-5f47-4c93-b23c-72a7f54969da" target="_blank" rel="noopener">Verify credential</a></article>
+        {%- for c in r.certifications %}
+        <article class="cert-card{% if c.feature %} cert-feature{% endif %} reveal"><p class="file-no">FILE #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p><h3>{{ c.name }}{% if c.new_until and c.new_until > today %} <span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</h3><p>{{ c.detail }}</p>{% if c.verify_url %} <a class="cert-verify" href="{{ c.verify_url }}" target="_blank" rel="noopener">{{ c.verify_label }}</a>{% endif %}</article>
+        {%- endfor %}
       </div>
     </div>
   </section>
@@ -184,111 +167,52 @@
     <div class="wrap">
       <p class="section-label reveal">Field operations // Experience</p>
       <h2 class="reveal">Advanced support, Active Directory, <em>and Python automation</em></h2>
-
+      {% for job in r.jobs %}
       <article class="job reveal">
-        <p class="log-line">// FIELD_LOG [EMPLOYMENT] &mdash; NOV 2024 &mdash; PRESENT</p>
-        <h3>Stan Weaver North and Central Florida, Tampa, FL</h3>
-        <p class="role"><strong>IT Specialist II</strong> | Nov 2024 - Present</p>
+        <p class="log-line">// FIELD_LOG [EMPLOYMENT] &mdash; {{ job.span | upcase }}</p>
+        <h3>{{ job.employer }}</h3>
+        {%- for role in job.roles %}
+        <p class="role">{% for t in role.titles %}<strong>{{ t.name }}</strong> | {{ t.dates }}{% unless forloop.last %} &nbsp; {% endunless %}{% endfor %}</p>
         <ul>
-          <li>Provide advanced technical support for end users across hardware, software, and network issues, resolving escalated problems through methodical root-cause analysis.</li>
-          <li>Administer Active Directory user accounts, group memberships, and access permissions.</li>
-          <li>Design and build Python automation (FastAPI, SQLite) with document processing and PII redaction, deployed as a self-restarting Windows service.</li>
+          {%- for b in role.bullets %}
+          <li>{{ b }}</li>
+          {%- endfor %}
         </ul>
-        <p class="role"><strong>IT Specialist</strong> | Jul 2023 - Nov 2024</p>
-        <ul>
-          <li>Delivered frontline IT support for hardware, software, and connectivity issues.</li>
-          <li>Performed system setup, configuration, and routine maintenance.</li>
-          <li>Documented solutions to support team knowledge sharing.</li>
-        </ul>
+        {%- endfor %}
       </article>
-
-      <article class="job reveal">
-        <p class="log-line">// FIELD_LOG [EMPLOYMENT] &mdash; MAY 2022 &mdash; JUN 2023</p>
-        <h3>Christian Life Fellowship, Cape Coral, FL</h3>
-        <p class="role"><strong>Tech Director</strong> | May 2022 - Jun 2023</p>
-        <ul>
-          <li>Led technology operations, including live production systems, for weekly services and events.</li>
-          <li>Coordinated technical volunteers and event technology needs.</li>
-          <li>Resolved technical issues in real time to keep services running smoothly.</li>
-        </ul>
-      </article>
-
-      <article class="job reveal">
-        <p class="log-line">// FIELD_LOG [EMPLOYMENT] &mdash; NOV 2015 &mdash; JUN 2022</p>
-        <h3>Grace Family Church, Tampa, FL</h3>
-        <p class="role"><strong>Tech Lead</strong> | Sep 2021 - Jun 2022 &nbsp; <strong>Live Video Tech</strong> | Nov 2015 - Jun 2022</p>
-        <ul>
-          <li>Led the live video production tech team.</li>
-          <li>Operated and maintained live video production equipment for weekly services and events across six-plus years.</li>
-          <li>Troubleshot AV issues in real time during live productions.</li>
-        </ul>
-      </article>
+      {% endfor %}
     </div>
   </section>
 
   <section class="section" id="projects">
     <div class="wrap">
+      {%- assign proj_count = r.projects.size | prepend: '0' | slice: -2, 2 %}
       <p class="section-label reveal">Evidence board // Security projects</p>
-      <h2 class="reveal">Only security related work. <em>Four files.</em></h2>
-      <p class="board-meta reveal">EVIDENCE ARCHIVE / 04 FILES / DRAG OR SCROLL TO EXPLORE</p>
+      {%- assign number_words = "Zero,One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten,Eleven,Twelve" | split: "," %}
+      <h2 class="reveal">Only security related work. <em>{{ number_words[r.projects.size] | default: r.projects.size }} files.</em></h2>
+      <p class="board-meta reveal">EVIDENCE ARCHIVE / {{ proj_count }} FILES / SCROLL TO EXPLORE, DECRYPT TO READ</p>
       <div class="board-controls reveal">
         <button class="board-btn" id="boardPrev" type="button" aria-label="Previous evidence">&larr; Prev</button>
         <button class="board-btn" id="boardNext" type="button" aria-label="Next evidence">Next &rarr;</button>
+        <button class="board-btn board-btn--all" id="decryptAll" type="button">Decrypt all</button>
       </div>
       <div class="board" id="board">
-        <article class="evidence reveal">
-          <p class="file-no">EVIDENCE #01</p>
-          <h3>Firewall, DNS, and Infrastructure Security</h3>
-          <p class="project-meta">HOME LAB // OPNsense | AdGuard | Hyper-V | Self-hosted, ongoing</p>
+        {%- for proj in r.projects %}
+        <article class="evidence redacted reveal">
+          <p class="file-no">EVIDENCE #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+          <h3>{{ proj.title }}</h3>
+          <p class="project-meta">{{ proj.eyebrow | upcase }} // {{ proj.meta }}</p>
           <ul>
-            <li>Protect the whole house with OPNsense as the firewall, with redundant firewall and DNS setups.</li>
-            <li>Use AdGuard for DNS blocking across the home network.</li>
-            <li>Run a Hyper-V server hosting an Uptime Kuma monitor and a domain controller for local Active Directory testing.</li>
-            <li>Host local services behind that protection, including a Jellyfin server for local media and a server with a 1080 Ti for local AI testing and tinkering.</li>
-            <li>High Availability Networking: Designed and deployed a highly available OPNsense firewall cluster utilizing CARP for seamless failover, integrated with Tailscale VPN for secure remote access.</li>
-            <li>Enterprise Virtualization &amp; DR: Administer a Microsoft Hyper-V environment hosting headless Linux servers and Docker containers, utilizing Veeam Backup &amp; Replication for comprehensive Disaster Recovery (DR) and automated backups.</li>
+            {%- for b in proj.bullets %}
+            <li>{{ b }}</li>
+            {%- endfor %}
           </ul>
-          <p class="decrypt">[ CLICK TO DECRYPT ]</p>
+          {%- if proj.link_url %}
+          <p><a class="project-link" href="{{ proj.link_url }}" target="_blank" rel="noopener">{{ proj.link_label }}</a></p>
+          {%- endif %}
+          <button class="decrypt" type="button" aria-pressed="false">[ Decrypt file ]</button>
         </article>
-
-        <article class="evidence reveal">
-          <p class="file-no">EVIDENCE #02</p>
-          <h3>T-Pot Honeypot, Attack Telemetry</h3>
-          <p class="project-meta">LIVE DEFENSIVE HONEYPOT // Oracle Cloud Always Free | T-Pot, Cowrie, Tanner | Oct 2026 - Present</p>
-          <ul>
-            <li>Deployed a T-Pot honeypot on an isolated Oracle Cloud Always Free virtual machine, with only decoy services exposed to the internet.</li>
-            <li>Collects real SSH, SQL, SIP, and HTTP attack telemetry through Cowrie, Dionaea, Sentrypeer, and Tanner, with an attack map showing source countries and service types.</li>
-            <li>Logged 149,551 attacks in 24 hours as of October 30, 2026, up from 3,292 on October 28, 2026, with counts and trends shared only in sanitized form, no source IPs or payloads published.</li>
-          </ul>
-          <p class="decrypt">[ CLICK TO DECRYPT ]</p>
-        </article>
-
-        <article class="evidence reveal">
-          <p class="file-no">EVIDENCE #03</p>
-          <h3>Hack The Box Labs</h3>
-          <p class="project-meta">OFFENSIVE SECURITY PRACTICE // May 2026 - Present</p>
-          <ul>
-            <li>Practical training in vulnerability assessment, network enumeration, and privilege escalation using Kali Linux tooling.</li>
-            <li>Bash and PowerShell scripting to automate reconnaissance and interact with target systems.</li>
-            <li>Translating offensive security findings into defensive strategies for enterprise networks.</li>
-            <li>BSides Tampa CTF (11th Place): Competed in the BSides Tampa Capture The Flag competition, demonstrating practical offensive security, enumeration, and exploitation skills under pressure to secure an 11th place overall team finish. The team pwned 19 of 24 flags, and Beard98 was named Team MVP.</li>
-          </ul>
-          <p class="decrypt">[ CLICK TO DECRYPT ]</p>
-        </article>
-
-        <article class="evidence reveal">
-          <p class="file-no">EVIDENCE #04</p>
-          <h3>Lantern, Home Network Scanner</h3>
-          <p class="project-meta">OPEN SOURCE SECURITY TOOL // Python, stdlib only | Open source, MIT | Oct 2026 - Present</p>
-          <ul>
-            <li>Built from scratch a local-first scanner that finds devices on a private home network, flags risky open ports in plain English, and shows what changed since the last scan.</li>
-            <li>Defensive only and local-first: private subnets only, no brute force or exploits, with results staying in a local SQLite file with scan history and diff.</li>
-            <li>Command line first with a local web dashboard, named network scopes, and trusted-device labels stored by MAC address.</li>
-            <li>Ready for use now, and still being updated.</li>
-          </ul>
-          <p><a class="project-link" href="https://github.com/DarthBitBeard/Lantern" target="_blank" rel="noopener">View Lantern on GitHub</a></p>
-          <p class="decrypt">[ CLICK TO DECRYPT ]</p>
-        </article>
+        {%- endfor %}
       </div>
     </div>
   </section>
@@ -298,26 +222,21 @@
       <p class="section-label reveal">Affiliations // Community</p>
       <h2 class="reveal">Volunteer work <em>outside the day job</em></h2>
       <div class="volunteer-grid">
+        {%- for vol in r.volunteering %}
         <article class="project reveal">
-          <p class="file-no">AFFILIATION #01</p>
-          <h3>Folding@Home, Team SpringHill_Folders</h3>
-          <p class="project-meta">VOLUNTEER LEADERSHIP // Team Lead | Mar 2026 - Present</p>
+          <p class="file-no">AFFILIATION #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
+          <h3>{{ vol.title }}</h3>
+          <p class="project-meta">{{ vol.eyebrow | upcase }} // {{ vol.meta }}</p>
           <ul>
-            <li>Founded and manage Team SpringHill_Folders (#1068033), a multi-node distributed computing team (Ubuntu Linux and Windows nodes) supporting protein-folding research at the Washington University School of Medicine, coordinating resources to maximize points-per-day (PPD) and team ranking.</li>
-            <li>Tune GPU and CPU workloads and thermal profiles for 24/7 high-uptime contribution while maintaining hardware longevity.</li>
-            <li>Reached 220,000,000 points on October 29, 2026, certified by Folding@home.</li>
+            {%- for b in vol.bullets %}
+            <li>{{ b }}</li>
+            {%- endfor %}
           </ul>
-          <p><a class="project-link" href="https://landonbeard.beardlab.us/SpringHill_Folders/" target="_blank" rel="noopener">Visit the SpringHill Folders team page</a></p>
+          {%- if vol.link_url %}
+          <p><a class="project-link" href="{{ vol.link_url }}" target="_blank" rel="noopener">{{ vol.link_label }}</a></p>
+          {%- endif %}
         </article>
-
-        <article class="project reveal">
-          <p class="file-no">AFFILIATION #02</p>
-          <h3>Catchafire, Pro Bono IT Volunteer</h3>
-          <p class="project-meta">PRO BONO IT // Oct 2026 - Present</p>
-          <ul>
-            <li>Exploring pro bono IT and website support opportunities for nonprofit organizations through Catchafire.</li>
-          </ul>
-        </article>
+        {%- endfor %}
       </div>
     </div>
   </section>
@@ -327,12 +246,12 @@
       <p class="section-label reveal">Initiate contact // Channel open</p>
       <h2>Have a system<br><em>that needs defending?</em></h2>
       <p>For IT and cybersecurity roles, or to talk through a project, email is the fastest way to reach me.</p>
-      <p><a class="contact-email" href="mailto:lanbeard105@gmail.com">lanbeard105@gmail.com</a></p>
+      <p><a class="contact-email" href="mailto:{{ p.email }}">{{ p.email }}</a></p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="mailto:lanbeard105@gmail.com">Initiate contact</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/landon-beard">LinkedIn</a>
-        <a class="btn btn-ghost" href="https://github.com/DarthBitBeard">GitHub</a>
-        <a class="btn btn-ghost" href="Landon_Beard_Resume.pdf" download>Download resume (PDF)</a>
+        <a class="btn btn-primary" href="mailto:{{ p.email }}">Initiate contact</a>
+        <a class="btn btn-ghost" href="{{ p.linkedin }}">LinkedIn</a>
+        <a class="btn btn-ghost" href="{{ p.github }}">GitHub</a>
+        <a class="btn btn-ghost" href="{{ p.resume_pdf }}" download>Download resume (PDF)</a>
       </div>
     </div>
     <p class="ghost ghost-footer" aria-hidden="true">CONTACT</p>
@@ -341,8 +260,8 @@
 
 <footer>
   <div class="wrap footer-inner">
-    <p>LANDON BEARD // SPRING HILL, FLORIDA</p>
-    <p>Last updated November 2026. No phone number is published on this public site. <a href="#top">Back to top</a></p>
+    <p>{{ p.name | upcase }} // {{ p.location | upcase }}</p>
+    <p>Last updated <time datetime="{{ site.time | date: '%Y-%m-%d' }}">{{ site.time | date: '%B %-d, %Y' }}</time>. No phone number is published on this public site. <a href="#top">Back to top</a></p>
   </div>
 </footer>
 </body>

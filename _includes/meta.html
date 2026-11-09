@@ -1,0 +1,46 @@
+{%- assign p = site.data.resume.person -%}
+<title>{{ site.title }}</title>
+<meta name="description" content="{{ site.description }}">
+<link rel="canonical" href="{{ site.url }}/">
+{%- if page.noindex %}
+<meta name="robots" content="noindex, follow">
+{%- endif %}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="{{ p.name }}">
+<meta property="og:title" content="{{ p.name }} | {{ p.title }}, {{ p.field }}">
+<meta property="og:description" content="{{ site.description }}">
+<meta property="og:url" content="{{ site.url }}/">
+<meta property="og:image" content="{{ site.url }}/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ p.name }}, {{ p.title }}, {{ p.field }}">
+<meta property="og:locale" content="en_US">
+<meta property="profile:first_name" content="Landon">
+<meta property="profile:last_name" content="Beard">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ p.name }} | {{ p.title }}, {{ p.field }}">
+<meta name="twitter:description" content="{{ site.description }}">
+<meta name="twitter:image" content="{{ site.url }}/og-image.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": {{ p.name | jsonify }},
+  "jobTitle": {{ p.title | jsonify }},
+  "description": {{ site.description | jsonify }},
+  "url": "{{ site.url }}/",
+  "image": "{{ site.url }}/photo.jpg",
+  "email": "mailto:{{ p.email }}",
+  "address": { "@type": "PostalAddress", "addressLocality": {{ p.locality | jsonify }}, "addressRegion": {{ p.region | jsonify }}, "addressCountry": "US" },
+  "worksFor": { "@type": "Organization", "name": "Stan Weaver North and Central Florida" },
+  "alumniOf": [{% for e in site.data.resume.education %}{ "@type": "CollegeOrUniversity", "name": {{ e.school | jsonify }} }{% unless forloop.last %}, {% endunless %}{% endfor %}],
+  "knowsAbout": {{ site.data.resume.ticker_skills | jsonify }},
+  "hasCredential": [{% for c in site.data.resume.certifications %}
+    { "@type": "EducationalOccupationalCredential", "name": {{ c.name | jsonify }}, "recognizedBy": { "@type": "Organization", "name": {{ c.issuer | jsonify }} }{% if c.verify_url %}, "url": {{ c.verify_url | jsonify }}{% endif %} }{% unless forloop.last %},{% endunless %}{% endfor %}
+  ],
+  "sameAs": [{{ p.linkedin | jsonify }}, {{ p.github | jsonify }}]
+}
+</script>
