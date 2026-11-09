@@ -24,12 +24,45 @@
     });
   }
 
-  var skinLinks = document.querySelectorAll("[data-skin-link]");
-  skinLinks.forEach(function (link) {
-    link.addEventListener("click", function () {
-      try { localStorage.setItem("lb-skin", link.getAttribute("data-skin-link")); } catch (e) {}
+  /* Skin easter egg: the Case File skin is hidden. Triple-tap the hero
+     portrait, or type "casefile" anywhere, to open it. */
+  var skinLoader = document.getElementById("skinLoader");
+  var loaderFill = document.getElementById("loaderFill");
+  var skinSwitching = false;
+  function switchSkin(target, href) {
+    if (skinSwitching) { return; }
+    skinSwitching = true;
+    try { localStorage.setItem("lb-skin", target); } catch (e) {}
+    if (reduceMotion || !skinLoader) { window.location.href = href; return; }
+    skinLoader.classList.add("show");
+    skinLoader.setAttribute("aria-hidden", "false");
+    window.requestAnimationFrame(function () {
+      if (loaderFill) { loaderFill.style.width = "100%"; }
     });
+    window.setTimeout(function () { window.location.href = href; }, 950);
+  }
+  function openCaseFile() { switchSkin("casefile", "casefile.html"); }
+  var photoCardEgg = document.getElementById("photoCard");
+  if (photoCardEgg) {
+    var tapCount = 0;
+    var tapTimer = null;
+    photoCardEgg.addEventListener("click", function () {
+      tapCount += 1;
+      window.clearTimeout(tapTimer);
+      if (tapCount >= 3) { tapCount = 0; openCaseFile(); return; }
+      tapTimer = window.setTimeout(function () { tapCount = 0; }, 1200);
+    });
+  }
+  var typedEgg = "";
+  document.addEventListener("keydown", function (event) {
+    if (event.metaKey || event.ctrlKey || event.altKey) { return; }
+    var tag = (event.target && event.target.tagName) || "";
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") { return; }
+    if (typeof event.key !== "string" || event.key.length !== 1) { return; }
+    typedEgg = (typedEgg + event.key.toLowerCase()).slice(-8);
+    if (typedEgg === "casefile") { typedEgg = ""; openCaseFile(); }
   });
+  try { console.log("Psst. The subject keeps secrets. Tap the portrait three times."); } catch (e) {}
 
   function onScroll() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;

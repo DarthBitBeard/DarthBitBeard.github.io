@@ -155,21 +155,6 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
   transition: background 0.2s ease, color 0.2s ease;
 }
 .nav-cta:hover { background: var(--accent); color: #fff; }
-.skin-switch {
-  background: transparent;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  text-decoration: none;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 9px 16px;
-  border-radius: 2px;
-  white-space: nowrap;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-.skin-switch:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -716,4 +701,67 @@ footer { padding: 30px 0 38px; }
   .hero h1, .section h2, .cert-card h3, .evidence h3, .project h3, .contact h2 { color: #111; }
   .cert-card, .evidence, .project, .now-item, .dossier-col { background: #fff; border-color: #ccc; }
   p, li { color: #333 !important; }
+}
+
+/* ---------- Skin loader (easter egg transition) ---------- */
+.skin-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f4f7fb;
+  color: #0b1f3a;
+  text-align: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+}
+.skin-loader.show { opacity: 1; visibility: visible; pointer-events: auto; }
+.loader-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #0b1f3a;
+  margin: 0;
+}
+.loader-title {
+  font-family: var(--sans);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.loader-title::after {
+  content: "_";
+  color: #ffb020;
+  animation: loader-blink 0.8s steps(1) infinite;
+}
+.loader-sub { font-size: 0.9rem; color: rgba(11, 31, 58, 0.7); margin: 0; }
+.loader-track {
+  width: min(320px, 70vw);
+  height: 4px;
+  background: rgba(11, 31, 58, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.loader-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #ffb020;
+  border-radius: 999px;
+  transition: width 0.9s ease;
+}
+@keyframes loader-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader-title::after { animation: none; }
 }

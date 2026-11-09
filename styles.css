@@ -138,17 +138,6 @@ a:focus-visible, .btn:focus-visible { outline: 3px solid rgba(0, 113, 227, 0.45)
   cursor: pointer;
 }
 .theme-toggle:hover { background: var(--hover-bg); }
-.skin-switch {
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 980px;
-  color: var(--text);
-  font-size: 0.85rem;
-  padding: 7px 14px;
-  white-space: nowrap;
-  text-decoration: none;
-}
-.skin-switch:hover { background: var(--hover-bg); }
 
 .hero { position: relative; padding: 88px 0 64px; background: var(--bg); overflow: hidden; }
 .blob {
@@ -490,4 +479,65 @@ footer { padding: 28px 0 36px; background: var(--bg); }
   .reveal { opacity: 1 !important; transform: none !important; }
   .section, .hero { padding: 24px 0; }
   body { background: #fff; }
+}
+
+/* ---------- Skin loader (easter egg transition) ---------- */
+.skin-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0b1f3a;
+  color: #f4f7fb;
+  text-align: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+}
+.skin-loader.show { opacity: 1; visibility: visible; pointer-events: auto; }
+.loader-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffb020;
+  margin: 0;
+}
+.loader-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.loader-title::after {
+  content: "_";
+  color: #ffb020;
+  animation: loader-blink 0.8s steps(1) infinite;
+}
+.loader-sub { font-size: 0.9rem; color: rgba(244, 247, 251, 0.75); margin: 0; }
+.loader-track {
+  width: min(320px, 70vw);
+  height: 4px;
+  background: rgba(244, 247, 251, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.loader-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #ffb020;
+  border-radius: 999px;
+  transition: width 0.9s ease;
+}
+@keyframes loader-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .loader-title::after { animation: none; }
 }
