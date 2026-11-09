@@ -34,6 +34,8 @@
     skinSwitching = true;
     try { localStorage.setItem("lb-skin", target); } catch (e) {}
     if (reduceMotion || !skinLoader) { window.location.href = href; return; }
+    skinLoader.style.display = "flex";
+    void skinLoader.offsetWidth;
     skinLoader.classList.add("show");
     skinLoader.setAttribute("aria-hidden", "false");
     window.requestAnimationFrame(function () {
