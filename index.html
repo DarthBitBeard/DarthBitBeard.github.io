@@ -7,8 +7,9 @@
 <meta name="description" content="Resume and security projects for Landon Beard, IT Specialist II with CompTIA Security+, Network+, A+, and ISC2 Certified in Cybersecurity.">
 <meta name="color-scheme" content="light dark">
 <script>try{var savedTheme=localStorage.getItem("theme");var theme=savedTheme||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",theme);}catch(e){document.documentElement.setAttribute("data-theme","light");}</script>
-<link rel="stylesheet" href="styles.css?v=2">
-<script src="script.js?v=2" defer></script>
+<script>try{if(localStorage.getItem("lb-skin")==="casefile"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("casefile.html");}}catch(e){}</script>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -26,6 +27,7 @@
       <a href="#skills">Skills</a>
     </div>
     <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">Dark mode</button>
+    <a class="skin-switch" href="casefile.html" data-skin-link="casefile">Skin: Case File</a>
     <a class="nav-cta" href="mailto:lanbeard105@gmail.com">Email me</a>
   </nav>
 </header>
@@ -46,6 +48,7 @@
         </div>
         <p class="hero-meta reveal">Spring Hill, Florida</p>
         <ul class="hero-pills reveal" aria-label="Key certifications">
+          <li>CompTIA CySA+</li>
           <li>CompTIA Security+</li>
           <li>ISC2 Certified in Cybersecurity</li>
           <li>Microsoft Azure Fundamentals</li>
@@ -74,7 +77,7 @@
     <div class="wrap">
       <p class="now-label reveal">Now, November 2026</p>
       <div class="now-grid">
-        <article class="now-item reveal"><h3>CySA+ passed</h3><p>Passed the CompTIA CySA+ (CS0-004) exam on October 31, 2026. Next on the ladder: PenTest+.</p></article>
+        <article class="now-item reveal"><h3>CySA+ passed</h3><p>Passed the CompTIA CySA+ (CS0-004) exam on October 31, 2026. Next on the ladder: SC-300.</p></article>
         <article class="now-item reveal"><h3>Lantern ready for use</h3><p>Open source home network scanner, ready to use and still being updated. See it in Security Projects below.</p></article>
         <article class="now-item reveal"><h3>Honeypot live</h3><p>Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. The live dashboard stays private.</p></article>
       </div>
@@ -96,9 +99,10 @@
   <section class="section band" id="certifications">
     <div class="wrap">
       <h2 class="reveal">Certifications</h2>
-      <p class="section-intro reveal">Verified credentials, led by Security+ and the CSIS and CSAP stackable certifications.</p>
+      <p class="section-intro reveal">Verified credentials, led by CySA+ and the CSAP and CSIS stackable certifications.</p>
       <div class="cert-grid">
-        <article class="cert-card cert-feature reveal"><h3>CompTIA Security+ ce</h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/88ded576-ed7d-4979-b102-b940218d5db2/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
+        <article class="cert-card cert-feature reveal"><h3>CompTIA CySA+ (CS0-004) <span class="cert-badge">New</span></h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/6f017276-ee83-465f-86f4-5b300eeb3a56/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
+        <article class="cert-card reveal"><h3>CompTIA Security+ ce</h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/88ded576-ed7d-4979-b102-b940218d5db2/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
         <article class="cert-card reveal"><h3>CompTIA Secure Infrastructure Specialist, CSIS</h3><p>Stackable, Oct 2026</p> <a class="cert-verify" href="https://www.credly.com/badges/53ce50cb-7cde-4eb6-b8df-b78b2a895c7f/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
         <article class="cert-card reveal"><h3>CompTIA Security Analytics Professional, CSAP</h3><p>Stackable, Oct 2026</p> <a class="cert-verify" href="https://www.credly.com/badges/20da98ca-8a11-4c26-a546-08fce2b329af/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
         <article class="cert-card reveal"><h3>CompTIA A+ ce</h3><p>May 2023, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/6ac6c10d-a9b5-4c80-af2a-1156dcb08967/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
@@ -110,7 +114,6 @@
         <article class="cert-card reveal"><h3>Coding Boot Camp Certificate, UT Austin</h3><p>Jun 2024</p></article>
         <article class="cert-card reveal"><h3>Databricks Generative AI Fundamentals</h3><p>Oct 2026</p> <a class="cert-verify" href="https://credentials.databricks.com/87c6980f-ba79-4e67-a40b-afd0e3029c2b" target="_blank" rel="noopener">Verify credential</a></article>
         <article class="cert-card reveal"><h3>Databricks AI Agent Fundamentals</h3><p>Oct 2026</p> <a class="cert-verify" href="https://credentials.databricks.com/7da74bd0-5f47-4c93-b23c-72a7f54969da" target="_blank" rel="noopener">Verify credential</a></article>
-        <article class="cert-card reveal"><h3>CompTIA CySA+ (CS0-004)</h3><p>Oct 2026, expires Oct 2029</p> <a class="cert-verify" href="https://www.credly.com/badges/6f017276-ee83-465f-86f4-5b300eeb3a56/linked_in_profile" target="_blank" rel="noopener">Verify on Credly</a></article>
       </div>
     </div>
   </section>
@@ -289,7 +292,7 @@
 <footer>
   <div class="wrap footer-inner">
     <p>Landon Beard, Spring Hill, Florida</p>
-    <p>Last updated October 2026. No phone number is published on this public site. <a href="#top">Back to top</a></p>
+    <p>Last updated November 2026. No phone number is published on this public site. <a href="#top">Back to top</a></p>
   </div>
 </footer>
 </body>
