@@ -136,9 +136,11 @@
       </div>
       <div class="cert-grid">
         {%- for c in r.certifications %}
-        {%- assign issuer_key = c.issuer | downcase | split: ' ' | first %}
+        {%- assign issuer_label = c.issuer | split: ' ' | first %}
+        {%- if c.issuer_short %}{% assign issuer_label = c.issuer_short %}{% endif %}
+        {%- assign issuer_key = issuer_label | downcase | split: ' ' | first %}
         <article class="cert-card spot{% if c.feature %} cert-feature{% endif %} reveal" style="--i: {{ forloop.index0 | modulo: 3 }}">
-          <div class="cert-top"><span class="issuer issuer--{{ issuer_key }}">{{ c.issuer | split: ' ' | first }}</span>{% if c.new_until and c.new_until > today %}<span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</div>
+          <div class="cert-top"><span class="issuer issuer--{{ issuer_key }}">{{ issuer_label }}</span>{% if c.new_until and c.new_until > today %}<span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</div>
           <h3>{{ c.name }}</h3>
           <p>{{ c.detail }}</p>
           {%- if c.verify_url %}
