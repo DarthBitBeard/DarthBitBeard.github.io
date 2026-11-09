@@ -92,7 +92,7 @@
   /* Skin easter egg: the Classic skin is hidden while the file is open.
      Triple-tap the hero portrait, or type "classic" anywhere, to go back. */
   var skinLoader = document.getElementById("skinLoader");
-  var loaderFill = document.getElementById("loaderFill");
+  var loaderFills = skinLoader ? skinLoader.querySelectorAll(".loader-fill") : [];
   var skinSwitching = false;
   function switchSkin(target, href) {
     if (skinSwitching) { return; }
@@ -104,7 +104,7 @@
     skinLoader.classList.add("show");
     skinLoader.setAttribute("aria-hidden", "false");
     window.requestAnimationFrame(function () {
-      if (loaderFill) { loaderFill.style.width = "100%"; }
+      for (var i = 0; i < loaderFills.length; i++) { loaderFills[i].style.width = "100%"; }
     });
     window.setTimeout(function () { window.location.href = href; }, 950);
   }

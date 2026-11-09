@@ -27,7 +27,7 @@
   /* Skin easter egg: the Case File skin is hidden. Triple-tap the hero
      portrait, or type "casefile" anywhere, to open it. */
   var skinLoader = document.getElementById("skinLoader");
-  var loaderFill = document.getElementById("loaderFill");
+  var loaderFills = skinLoader ? skinLoader.querySelectorAll(".loader-fill") : [];
   var skinSwitching = false;
   function switchSkin(target, href) {
     if (skinSwitching) { return; }
@@ -39,7 +39,7 @@
     skinLoader.classList.add("show");
     skinLoader.setAttribute("aria-hidden", "false");
     window.requestAnimationFrame(function () {
-      if (loaderFill) { loaderFill.style.width = "100%"; }
+      for (var i = 0; i < loaderFills.length; i++) { loaderFills[i].style.width = "100%"; }
     });
     window.setTimeout(function () { window.location.href = href; }, 950);
   }
