@@ -1,0 +1,12 @@
+---
+# RFC 9116 security contact. Built by Jekyll so Expires renews on every build
+# (about 300 days ahead; the RFC recommends less than a year).
+permalink: /.well-known/security.txt
+---
+Contact: mailto:{{ site.data.resume.person.email }}
+Expires: {{ site.time | date: '%s' | plus: 25920000 | date: '%Y-%m-%dT00:00:00Z' }}
+Preferred-Languages: en
+Canonical: {{ site.url }}/.well-known/security.txt
+
+# This is a personal resume site with no logins, forms or user data.
+# If you find something wrong with it anyway, I'd like to hear about it.

@@ -14,16 +14,18 @@ noindex: true
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{% include csp.html %}
 {% include meta.html %}
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="preload" href="fonts/playfair-display-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/jetbrains-mono-normal.woff2" as="font" type="font/woff2" crossorigin>
-<script>try{if(localStorage.getItem("lb-skin")==="classic"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("./");}else if(sessionStorage.getItem("lb-arrive")==="casefile"){sessionStorage.removeItem("lb-arrive");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("sk-arriving");}}}catch(e){}</script>
+<script src="head.js?v={{ v }}" data-skin="casefile"></script>
 <link rel="stylesheet" href="fonts/fonts.css?v={{ v }}">
 <link rel="stylesheet" href="casefile.css?v={{ v }}">
 <link rel="stylesheet" href="skin-transition.css?v={{ v }}">
 <script src="skin-transition.js?v={{ v }}" defer></script>
+<script src="common.js?v={{ v }}" defer></script>
 <script src="casefile.js?v={{ v }}" defer></script>
 </head>
 <body>
@@ -57,7 +59,7 @@ noindex: true
     <div class="corner bl" aria-hidden="true">+</div>
     <div class="corner br" aria-hidden="true">+</div>
     <div class="wrap hero-grid">
-      <div class="hero-file" aria-label="File data">
+      <div class="hero-file" role="group" aria-label="File data">
         <p><span>FILE</span> {{ p.name | upcase }}</p>
         <p><span>CLASS</span> {{ p.title | upcase | replace: ' ', '_' }}</p>
         <p><span>FIELD</span> {{ p.field | upcase }}</p>
@@ -94,7 +96,7 @@ noindex: true
     <p class="ghost" aria-hidden="true">BEARD</p>
   </section>
 
-  <div class="ticker" aria-label="System log">
+  <div class="ticker">
     <div class="ticker-track">
       {% for t in r.timeline %}<span>{{ t.date }} // {{ t.event }}</span>{% endfor %}
       {% for t in r.timeline %}<span aria-hidden="true">{{ t.date }} // {{ t.event }}</span>{% endfor %}
@@ -103,7 +105,7 @@ noindex: true
 
   <section class="now" id="now" aria-label="Active cases">
     <div class="wrap">
-      <p class="section-label reveal">Active cases // {{ r.now.items.size | prepend: '0' | slice: -2, 2 }} open // as of <time datetime="{{ r.now.as_of | date: '%Y-%m-%d' }}">{{ r.now.as_of | date: '%b %Y' | upcase }}</time></p>
+      <h2 class="section-label reveal">Active cases // {{ r.now.items.size | prepend: '0' | slice: -2, 2 }} open // as of <time datetime="{{ r.now.as_of | date: '%Y-%m-%d' }}">{{ r.now.as_of | date: '%b %Y' | upcase }}</time></h2>
       <div class="now-grid">
         {%- for item in r.now.items %}
         <article class="now-item reveal"><p class="case-no">CASE {{ forloop.index | prepend: '0' | slice: -2, 2 }} // <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%Y-%m-%d' }}</time></p><h3>{{ item.title }}</h3><p>{{ item.text_casefile | default: item.text }}</p></article>
@@ -129,7 +131,9 @@ noindex: true
         </div>
         <div class="dossier-col dossier-bio reveal">
           <p class="dossier-head">COMPETENCE ANALYSIS // READ ONLY</p>
-          <p>{{ p.about }}</p>
+          {%- for para in p.about %}
+          <p>{{ para }}</p>
+          {%- endfor %}
           <div class="about-stats">
             {%- for s in r.stats %}
             <p><b>{{ s.value }}</b> {{ s.text }}</p>
@@ -157,7 +161,7 @@ noindex: true
       <h2 class="reveal">Verified credentials, <em>led by CySA+</em></h2>
       <div class="cert-grid">
         {%- for c in r.certifications %}
-        <article class="cert-card{% if c.feature %} cert-feature{% endif %} reveal"><p class="file-no">FILE #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p><h3>{{ c.name }}{% if c.new_until and c.new_until > today %} <span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</h3><p>{{ c.detail }}</p>{% if c.verify_url %} <a class="cert-verify" href="{{ c.verify_url }}" target="_blank" rel="noopener">{{ c.verify_label }}</a>{% endif %}</article>
+        <article class="cert-card{% if c.feature %} cert-feature{% endif %} reveal"><p class="file-no">FILE #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p><h3>{{ c.name }}{% if c.new_until and c.new_until > today %} <span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</h3><p>{{ c.detail }}</p>{% if c.verify_url %} <a class="cert-verify" href="{{ c.verify_url }}" target="_blank" rel="noopener">{{ c.verify_label }}<span class="sr-only"> (opens in a new tab)</span></a>{% endif %}</article>
         {%- endfor %}
       </div>
     </div>
@@ -189,7 +193,7 @@ noindex: true
       {%- assign proj_count = r.projects.size | prepend: '0' | slice: -2, 2 %}
       <p class="section-label reveal">Evidence board // Security projects</p>
       {%- assign number_words = "Zero,One,Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten,Eleven,Twelve" | split: "," %}
-      <h2 class="reveal">Only security related work. <em>{{ number_words[r.projects.size] | default: r.projects.size }} files.</em></h2>
+      <h2 class="reveal">Hands-on security work. <em>{{ number_words[r.projects.size] | default: r.projects.size }} files.</em></h2>
       <p class="board-meta reveal">EVIDENCE ARCHIVE / {{ proj_count }} FILES / SCROLL TO EXPLORE, DECRYPT TO READ</p>
       <div class="board-controls reveal">
         <button class="board-btn" id="boardPrev" type="button" aria-label="Previous evidence">&larr; Prev</button>
@@ -208,7 +212,7 @@ noindex: true
             {%- endfor %}
           </ul>
           {%- if proj.link_url %}
-          <p><a class="project-link" href="{{ proj.link_url }}" target="_blank" rel="noopener">{{ proj.link_label }}</a></p>
+          <p><a class="project-link" href="{{ proj.link_url }}" target="_blank" rel="noopener">{{ proj.link_label }}<span class="sr-only"> (opens in a new tab)</span></a></p>
           {%- endif %}
           <button class="decrypt" type="button" aria-pressed="false">[ Decrypt file ]</button>
         </article>
@@ -223,6 +227,7 @@ noindex: true
       <h2 class="reveal">Volunteer work <em>outside the day job</em></h2>
       <div class="volunteer-grid">
         {%- for vol in r.volunteering %}
+        {%- if vol.hidden %}{% continue %}{% endif %}
         <article class="project reveal">
           <p class="file-no">AFFILIATION #{{ forloop.index | prepend: '0' | slice: -2, 2 }}</p>
           <h3>{{ vol.title }}</h3>
@@ -233,7 +238,7 @@ noindex: true
             {%- endfor %}
           </ul>
           {%- if vol.link_url %}
-          <p><a class="project-link" href="{{ vol.link_url }}" target="_blank" rel="noopener">{{ vol.link_label }}</a></p>
+          <p><a class="project-link" href="{{ vol.link_url }}" target="_blank" rel="noopener">{{ vol.link_label }}<span class="sr-only"> (opens in a new tab)</span></a></p>
           {%- endif %}
         </article>
         {%- endfor %}
@@ -249,8 +254,8 @@ noindex: true
       <p><a class="contact-email" href="mailto:{{ p.email }}">{{ p.email }}</a></p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="mailto:{{ p.email }}">Initiate contact</a>
-        <a class="btn btn-ghost" href="{{ p.linkedin }}">LinkedIn</a>
-        <a class="btn btn-ghost" href="{{ p.github }}">GitHub</a>
+        <a class="btn btn-ghost" href="{{ p.linkedin }}" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="btn btn-ghost" href="{{ p.github }}" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
         <a class="btn btn-ghost" href="{{ p.resume_pdf }}" download>Download resume (PDF)</a>
       </div>
     </div>

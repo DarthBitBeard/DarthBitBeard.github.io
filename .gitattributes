@@ -1,0 +1,11 @@
+# Store text files with LF line endings and check them out the same way on
+# every OS, so Git stops warning about LF/CRLF conversion on Windows.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.avif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff2 binary

@@ -6,11 +6,12 @@ Built with HTML and CSS, plus small JavaScript files for scroll effects, the mob
 
 ## How to update
 
-- **Content** (certs, jobs, projects, the "Now" strip, skills): edit `_data/resume.yml` and commit. Both skins, the classic `index.html` and the hidden `casefile.html`, render from that one file.
+- **Content** (certs, jobs, projects, the "Now" strip, skills): edit `_data/resume.yml` and commit. Both skins, the classic `index.html` and the hidden `casefile.html`, render from that one file. Add `hidden: true` to a volunteering entry to keep it in the file but off the site.
 - **Classic skin layout and styling**: `index.html` and `styles.css`.
 - **Case File skin layout and styling**: `casefile.html` and `casefile.css`.
 - **Skin-switch transition**: `_includes/skin-transition.html` (markup), `skin-transition.css` and `skin-transition.js`. The exit sequence plays on the page being left; the page being opened plays a matching arrival sequence, so the page change happens behind identical screens. Any click or key skips it, and it is skipped entirely for visitors who prefer reduced motion.
 - **Easter eggs** (Classic skin): `eggs.js` and `eggs.css`. Six are hidden: a terminal (the backtick key or the footer "LB" badge), the Konami code, typing `sudo`, five clicks on the nav logo, eight quick theme toggles, and the Case File skin. Each shows an achievement toast, progress is saved in the visitor's browser, and the browser console lists hints.
+- **Shared scripts**: `head.js` runs before the page draws (theme, remembered skin, the `js` class). `common.js` holds what both skins share: nav state, progress bar, mobile menu, reveal on scroll and the active nav link. `script.js` and `casefile.js` hold each skin's own behavior.
 - **Icons**: inline SVG symbols in `_includes/icons.html`.
 - **Resume PDF**: replace `Landon_Beard_Resume.pdf`.
 - **Photo**: replace `photo.jpg` (800x1000), then run `python tools/make_images.py` to regenerate the AVIF/WebP sizes, the link-preview image `og-image.jpg`, and the PNG icons.
@@ -26,6 +27,17 @@ docker run --rm -p 4000:4000 -v "$PWD:/srv/jekyll" jekyll/jekyll:pages jekyll se
 ```
 
 Then open http://localhost:4000.
+
+## Checks
+
+Every pull request and push to `main` runs `.github/workflows/check-site.yml`. It builds the site with the same Jekyll builder GitHub Pages uses, makes sure the key pages exist, and checks every link and image on the built pages. It also runs weekly to catch external links that stopped working. If it fails, the site would not have built (or has a broken link), so fix it before merging.
+
+## Security
+
+- `_includes/csp.html` sets a Content-Security-Policy that only allows scripts, styles, fonts and images from this site. Keep JavaScript in `.js` files and styles in `.css` files: inline `<script>` code and `style="..."` attributes are blocked. JSON data blocks (`type="application/json"` or `application/ld+json`) are fine.
+- HTTPS is enforced in the repository's Pages settings.
+- `/.well-known/security.txt` lists a security contact. Its `Expires` date renews on every build.
+- Without JavaScript, all content still shows: animation-only hiding is scoped to the `js` class that `head.js` adds.
 
 ## Search and sharing
 

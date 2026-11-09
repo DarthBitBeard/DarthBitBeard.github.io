@@ -144,7 +144,7 @@
     },
     cat: function (args) {
       var f = args[0] || "";
-      if (f === "about.txt") { line(person.about || ""); }
+      if (f === "about.txt") { [].concat(person.about || []).forEach(function (para, i) { if (i) { line(""); } line(para); }); }
       else if (f === "resume.pdf") { line("binary file, try this instead:", "dim"); linkLine(person.resume_pdf || "resume.pdf", person.resume_pdf || "#"); }
       else if (/^secrets/.test(f)) { line("cat: " + f + ": Permission denied", "err"); }
       else if (/^(certs|projects)\/?$/.test(f)) { line("cat: " + f + ": Is a directory", "err"); }

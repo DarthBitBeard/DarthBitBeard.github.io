@@ -13,16 +13,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{% include csp.html %}
 {% include meta.html %}
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)">
-<script>try{var savedTheme=localStorage.getItem("theme");var theme=savedTheme||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",theme);}catch(e){document.documentElement.setAttribute("data-theme","light");}</script>
-<script>try{if(localStorage.getItem("lb-skin")==="casefile"&&["landonbeard.beardlab.us","localhost","127.0.0.1"].indexOf(location.hostname)>-1){location.replace("casefile.html");}else if(sessionStorage.getItem("lb-arrive")==="classic"){sessionStorage.removeItem("lb-arrive");if(!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("sk-arriving");}}}catch(e){}</script>
+<script src="head.js?v={{ v }}" data-skin="classic"></script>
 <link rel="preload" href="fonts/inter-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css?v={{ v }}">
 <link rel="stylesheet" href="skin-transition.css?v={{ v }}">
 <script src="skin-transition.js?v={{ v }}" defer></script>
+<script src="common.js?v={{ v }}" defer></script>
 <script src="script.js?v={{ v }}" defer></script>
 <link rel="stylesheet" href="eggs.css?v={{ v }}">
 <script src="eggs.js?v={{ v }}" defer></script>
@@ -91,7 +92,7 @@
     <a class="scroll-hint" href="#now" aria-label="Scroll to content"><span></span></a>
   </section>
 
-  <div class="ticker" aria-label="Core skills">
+  <div class="ticker">
     <div class="ticker-track">
       {% for s in r.ticker_skills %}<span>{{ s }}</span>{% endfor %}
       {% for s in r.ticker_skills %}<span aria-hidden="true">{{ s }}</span>{% endfor %}
@@ -101,12 +102,12 @@
   <section class="now" id="now" aria-label="What {{ first_name }} is working on now">
     <div class="wrap">
       <div class="now-head reveal">
-        <p class="kicker"><span class="live-dot" aria-hidden="true"></span>Now</p>
+        <h2 class="kicker"><span class="live-dot" aria-hidden="true"></span>Now</h2>
         <p class="now-asof">Updated <time datetime="{{ r.now.as_of | date: '%Y-%m-%d' }}">{{ r.now.as_of | date: '%B %Y' }}</time></p>
       </div>
       <div class="now-grid">
         {%- for item in r.now.items %}
-        <article class="now-item reveal" style="--i: {{ forloop.index0 }}"><p class="now-date"><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%b %-d, %Y' }}</time></p><h3>{{ item.title }}</h3><p>{{ item.text }}</p></article>
+        <article class="now-item reveal"><p class="now-date"><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%b %-d, %Y' }}</time></p><h3>{{ item.title }}</h3><p>{{ item.text }}</p></article>
         {%- endfor %}
       </div>
     </div>
@@ -119,10 +120,14 @@
         <h2>Built in real environments, not just labs on paper</h2>
       </div>
       <div class="about-layout">
-        <p class="about-lead reveal">{{ p.about }}</p>
+        <div class="about-lead reveal">
+          {%- for para in p.about %}
+          <p>{{ para }}</p>
+          {%- endfor %}
+        </div>
         <div class="about-stats">
           {%- for s in r.stats %}
-          <article class="stat-tile spot reveal" style="--i: {{ forloop.index0 }}"><p class="stat-num" data-count="{{ s.value }}">{{ s.value }}</p><p>{{ s.text }}</p></article>
+          <div class="stat-tile spot reveal"><p class="stat-num" data-count="{{ s.value }}">{{ s.value }}</p><p>{{ s.text }}</p></div>
           {%- endfor %}
         </div>
       </div>
@@ -141,12 +146,12 @@
         {%- assign issuer_label = c.issuer | split: ' ' | first %}
         {%- if c.issuer_short %}{% assign issuer_label = c.issuer_short %}{% endif %}
         {%- assign issuer_key = issuer_label | downcase | split: ' ' | first %}
-        <article class="cert-card spot{% if c.feature %} cert-feature{% endif %} reveal" style="--i: {{ forloop.index0 | modulo: 3 }}">
+        <article class="cert-card spot{% if c.feature %} cert-feature{% endif %} reveal">
           <div class="cert-top"><span class="issuer issuer--{{ issuer_key }}">{{ issuer_label }}</span>{% if c.new_until and c.new_until > today %}<span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</div>
           <h3>{{ c.name }}</h3>
           <p>{{ c.detail }}</p>
           {%- if c.verify_url %}
-          <a class="cert-verify" href="{{ c.verify_url }}" target="_blank" rel="noopener">{{ c.verify_label }}<svg class="i" aria-hidden="true"><use href="#i-external"/></svg></a>
+          <a class="cert-verify" href="{{ c.verify_url }}" target="_blank" rel="noopener">{{ c.verify_label }}<svg class="i" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
           {%- endif %}
         </article>
         {%- endfor %}
@@ -189,11 +194,11 @@
       <div class="section-head reveal">
         <p class="kicker"><span>04</span>Security Projects</p>
         <h2>Hands-on security work</h2>
-        <p class="section-intro">Only security related work. A working home lab, hands-on offensive security practice, an open source defensive scanner, and a live defensive honeypot.</p>
+        <p class="section-intro">Built and run outside the day job: a high availability home lab, hands-on offensive security practice, an open source defensive scanner, and a live defensive honeypot.</p>
       </div>
       <div class="bento">
         {%- for proj in r.projects %}
-        <article class="project spot{% if forloop.first %} project-feature{% endif %} reveal" style="--i: {{ forloop.index0 | modulo: 2 }}">
+        <article class="project spot{% if forloop.first %} project-feature{% endif %} reveal">
           <div class="project-head">
             <span class="project-icon" aria-hidden="true"><svg class="i"><use href="#i-{{ proj.icon }}"/></svg></span>
             <p class="project-eyebrow">{{ proj.eyebrow }}</p>
@@ -211,7 +216,7 @@
             {%- endfor %}
           </ul>
           {%- if proj.link_url %}
-          <a class="project-link" href="{{ proj.link_url }}" target="_blank" rel="noopener">{{ proj.link_label }}<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="project-link" href="{{ proj.link_url }}" target="_blank" rel="noopener">{{ proj.link_label }}<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
           {%- endif %}
         </article>
         {%- endfor %}
@@ -224,11 +229,12 @@
       <div class="section-head reveal">
         <p class="kicker"><span>05</span>Volunteering</p>
         <h2>Outside the day job</h2>
-        <p class="section-intro">Leading a distributed computing team and pro bono IT support for nonprofits.</p>
+        <p class="section-intro">Leading a distributed computing team that donates compute to protein folding research.</p>
       </div>
       <div class="volunteer-grid">
         {%- for vol in r.volunteering %}
-        <article class="project project-light spot reveal" style="--i: {{ forloop.index0 }}">
+        {%- if vol.hidden %}{% continue %}{% endif %}
+        <article class="project project-light spot reveal">
           <div class="project-head">
             <span class="project-icon" aria-hidden="true"><svg class="i"><use href="#i-{{ vol.icon }}"/></svg></span>
             <p class="project-eyebrow">{{ vol.eyebrow }}</p>
@@ -246,7 +252,7 @@
             {%- endfor %}
           </ul>
           {%- if vol.link_url %}
-          <a class="project-link" href="{{ vol.link_url }}" target="_blank" rel="noopener">{{ vol.link_label }}<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="project-link" href="{{ vol.link_url }}" target="_blank" rel="noopener">{{ vol.link_label }}<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
           {%- endif %}
         </article>
         {%- endfor %}
@@ -262,7 +268,7 @@
       </div>
       <div class="skill-grid">
         {%- for g in r.skills %}
-        <article class="skill-card spot reveal" style="--i: {{ forloop.index0 | modulo: 2 }}">
+        <article class="skill-card spot reveal">
           <h3>{{ g.group }}</h3>
           <ul class="chips">
             {%- for item in g.items %}
@@ -293,8 +299,8 @@
         <p>For IT and cybersecurity roles, or to talk through a project, email is the fastest way to reach me.</p>
         <a class="contact-email" href="mailto:{{ p.email }}"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>{{ p.email }}</a>
         <div class="contact-links">
-          <a class="btn btn-on-dark" href="{{ p.linkedin }}"><svg class="i" aria-hidden="true"><use href="#i-briefcase"/></svg>LinkedIn</a>
-          <a class="btn btn-on-dark" href="{{ p.github }}"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>GitHub</a>
+          <a class="btn btn-on-dark" href="{{ p.linkedin }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-briefcase"/></svg>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn-on-dark" href="{{ p.github }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>GitHub<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn btn-on-dark" href="{{ p.resume_pdf }}" download><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Resume (PDF)</a>
         </div>
       </div>

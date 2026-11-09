@@ -17,7 +17,11 @@ person:
   resume_pdf: "Landon_Beard_Resume.pdf"
   tagline: "A decade of technical experience, from corporate IT support to live production technology. Calm under pressure, clear with non-technical users, and methodical about root cause."
   photo_caption: "IT Specialist II, focused on security, automation, and infrastructure that stays up."
-  about: "IT Specialist II and CompTIA CySA+ holder with a decade of technical experience spanning corporate IT support and live production technology. At Stan Weaver, provides advanced end user support, administers Active Directory, and builds Python automation that removes manual work, including document processing with PII redaction deployed as a self-restarting Windows service. Holds CompTIA CySA+, Security+, A+, and Network+, the CSAP and CSIS stackable certifications, ISC2 Certified in Cybersecurity, and Microsoft Azure Fundamentals. Outside the day job, runs a high availability home lab behind a redundant OPNsense firewall cluster with DNS filtering and automated disaster recovery, built Lantern, an open source local-first network scanner, and operates a live defensive honeypot. Also leads Team SpringHill_Folders, a distributed computing team supporting protein folding research. Focused on vulnerability management, identity and access, and detection work that holds up in production, not just in a lab."
+  # One paragraph per item.
+  about:
+    - "IT Specialist II and CompTIA CySA+ holder with a decade of technical experience spanning corporate IT support and live production technology. At Stan Weaver, provides advanced end user support, administers Active Directory, and builds Python automation that removes manual work, including document processing with PII redaction deployed as a self-restarting Windows service. Holds CompTIA CySA+, Security+, A+, and Network+, the CSAP and CSIS stackable certifications, ISC2 Certified in Cybersecurity, and Microsoft Azure Fundamentals."
+    - "Outside the day job, runs a high availability home lab behind a redundant OPNsense firewall cluster with DNS filtering and automated disaster recovery, built Lantern, an open source local-first network scanner, and operates a live defensive honeypot. Also leads Team SpringHill_Folders, a distributed computing team supporting protein folding research."
+    - "Focused on vulnerability management, identity and access, and detection work that holds up in production, not just in a lab."
 
 hero_pills:
   - "CompTIA CySA+"
@@ -244,6 +248,7 @@ projects:
     link_url: "https://github.com/DarthBitBeard/Lantern"
     link_label: "View Lantern on GitHub"
 
+# hidden: true keeps an entry in this file but off the site.
 volunteering:
   - eyebrow: "Volunteer Leadership"
     icon: "heart"
@@ -258,6 +263,8 @@ volunteering:
   - eyebrow: "Pro Bono IT"
     icon: "hands"
     title: "Catchafire, Pro Bono IT Volunteer"
+    # Hidden until there is a finished engagement to describe. Delete this line to show it.
+    hidden: true
     meta: "Oct 2026 - Present"
     bullets:
       - "Exploring pro bono IT and website support opportunities for nonprofit organizations through Catchafire."
