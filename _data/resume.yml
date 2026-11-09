@@ -92,6 +92,7 @@ timeline:
     event: "A+ PASSED"
 
 # new_until: the "New" badge hides itself after this date (YYYY-MM-DD).
+# issuer_short: optional label for the issuer tag; defaults to the issuer's first word.
 certifications:
   - name: "CompTIA CySA+ (CS0-004)"
     detail: "Oct 2026, expires Oct 2029"
@@ -146,6 +147,7 @@ certifications:
   - name: "Coding Boot Camp Certificate, UT Austin"
     detail: "Jun 2024"
     issuer: "The University of Texas at Austin"
+    issuer_short: "UT Austin"
   - name: "Databricks Generative AI Fundamentals"
     detail: "Oct 2026"
     issuer: "Databricks"
