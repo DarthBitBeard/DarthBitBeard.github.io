@@ -1,6 +1,7 @@
 ---
 # Contact card behind the "Save contact" buttons. Built from _data/resume.yml.
 # No phone number, on purpose: the public site never publishes one.
+# The photo comes from _includes/vcard-photo.vcf (python tools/make_images.py).
 ---
 {%- assign p = site.data.resume.person -%}
 {%- assign first_name = p.name | split: ' ' | first -%}
@@ -18,4 +19,5 @@ item2.URL:{{ p.github }}
 item2.X-ABLabel:GitHub
 ADR;TYPE=HOME:;;;{{ p.locality }};{{ p.region }};;USA
 NOTE:{{ p.title }}\, {{ p.field }}
+{% include vcard-photo.vcf %}
 END:VCARD
