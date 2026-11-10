@@ -1,0 +1,120 @@
+/* Printable resume (resume.html). Printed to Landon_Beard_Resume.pdf by
+   tools/make_resume_pdf.py. Arial and Georgia keep the PDF easy for
+   applicant tracking systems to read. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-normal.woff2") format("woff2");
+}
+
+@page { size: Letter; margin: 0.55in 0.6in 0.5in; }
+
+:root {
+  --navy: #1f3864;
+  --ink: #1a1a1a;
+  --muted: #555b66;
+  --rule: #1f3864;
+}
+
+* { box-sizing: border-box; }
+html { background: #e9ecf1; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+  font-size: 10pt;
+  line-height: 1.38;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+a { color: inherit; text-decoration: none; }
+
+/* On screen the resume sits on a sheet of paper; in print it is the page. */
+.page {
+  width: 8.5in;
+  min-height: 11in;
+  margin: 0 auto 40px;
+  padding: 0.55in 0.6in 0.5in;
+  background: #fff;
+  box-shadow: 0 10px 40px rgba(15, 23, 41, 0.18);
+}
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  width: 8.5in;
+  margin: 0 auto;
+  padding: 18px 4px;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 10.5pt;
+}
+.toolbar a { color: #0066cc; font-weight: 600; }
+.toolbar a:hover { text-decoration: underline; }
+
+.head h1 {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 24pt;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--navy);
+}
+.headline { margin: 4pt 0 2pt; font-size: 11.5pt; font-weight: 700; color: var(--navy); }
+.contact { margin: 0; font-size: 8.8pt; color: var(--muted); white-space: nowrap; }
+.contact .sep { margin: 0 2pt; color: #9aa1ab; }
+@media screen and (max-width: 8.8in) { .contact { white-space: normal; } }
+
+section { margin-top: 11pt; }
+h2 {
+  margin: 0 0 6pt;
+  padding: 0 0 2pt 4pt;
+  border-bottom: 1.5pt solid var(--rule);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10.5pt;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--navy);
+  break-after: avoid;
+}
+h3 {
+  margin: 7pt 0 2pt 4pt;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10pt;
+  font-weight: 700;
+  break-after: avoid;
+}
+p { margin: 0; }
+section > p { text-align: left; }
+ul { margin: 2pt 0 4pt; padding-left: 26pt; }
+li { margin: 0 0 1.5pt; padding-left: 2pt; }
+.muted { color: var(--muted); }
+
+.certs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  columns: 2;
+  column-gap: 22pt;
+}
+.certs li { margin: 0 0 3pt; padding: 0; break-inside: avoid; }
+
+.role-line { margin: 3pt 0 0; }
+.role-line .gap { display: inline-block; width: 14pt; }
+.role { break-inside: avoid; }
+.lines { line-height: 1.5; }
+.skill { margin: 0 0 3pt; }
+.keep { break-inside: avoid; }
+
+@media print {
+  html { background: #fff; }
+  .screen-only { display: none; }
+  .page { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+}
+@media screen and (max-width: 8.8in) {
+  .page { width: auto; min-height: 0; margin: 0 0 24px; padding: 28px 20px; }
+  .toolbar { width: auto; padding: 14px 20px; }
+  .certs { columns: 1; }
+}

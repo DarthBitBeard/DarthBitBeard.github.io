@@ -1,0 +1,114 @@
+---
+# Printable resume. Built from _data/resume.yml like the rest of the site.
+# Save it as the PDF with: python tools/make_resume_pdf.py
+permalink: /resume.html
+---
+{%- assign r = site.data.resume -%}
+{%- assign p = r.person -%}
+{%- assign rp = r.resume_pdf -%}
+{%- assign v = site.time | date: '%s' -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% include csp.html %}
+<title>{{ p.name }} - Resume</title>
+<meta name="description" content="Resume of {{ p.name }}, {{ p.title }}, {{ p.field }}.">
+<meta name="author" content="{{ p.name }}">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="resume.css?v={{ v }}">
+</head>
+<body>
+<p class="screen-only toolbar"><a href="./">&larr; Back to the site</a><a href="{{ p.resume_pdf }}" download>Download PDF</a></p>
+<main class="page">
+  <header class="head">
+    <h1>{{ p.name | upcase }}</h1>
+    <p class="headline">{{ p.title }} | {{ p.field }}</p>
+    <p class="contact">
+      {{ p.location }}
+      <span class="sep">|</span> <a href="mailto:{{ p.email }}">{{ p.email }}</a>
+      <span class="sep">|</span> <a href="{{ p.linkedin }}">{{ p.linkedin | remove: 'https://' | remove: 'www.' }}</a>
+      <span class="sep">|</span> <a href="{{ p.github }}">{{ p.github | remove: 'https://' }}</a>
+      <span class="sep">|</span> <a href="{{ site.url }}/">{{ rp.website }}</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p>{{ p.about | join: " " }}</p>
+  </section>
+
+  <section>
+    <h2>Certifications</h2>
+    <ul class="certs">
+      {%- for c in r.certifications %}
+      <li>{{ c.name }} <span class="muted">| {{ c.detail }}</span></li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    {%- for job in r.jobs %}
+    <div class="entry">
+      <h3>{{ job.employer | replace: " and ", " &amp; " }}</h3>
+      {%- for role in job.roles %}
+      <div class="role">
+        <p class="role-line">{% for t in role.titles %}{{ t.name }} | {{ t.dates }}{% unless forloop.last %}<span class="gap"></span>{% endunless %}{% endfor %}</p>
+        <ul>
+          {%- assign bullets = role.resume_bullets | default: role.bullets %}
+          {%- for b in bullets %}
+          <li>{{ b }}</li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    {%- for proj in rp.projects %}
+    <div class="entry role">
+      <h3>{{ proj.title }} | {{ proj.dates }}</h3>
+      <ul>
+        {%- for b in proj.bullets %}
+        <li>{{ b }}</li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section>
+    <h2>Volunteer Leadership</h2>
+    {%- for vol in rp.volunteering %}
+    <div class="entry role">
+      <h3>{{ vol.title }} | {{ vol.dates }}</h3>
+      <ul>
+        {%- for b in vol.bullets %}
+        <li>{{ b }}</li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section class="keep">
+    <h2>Education</h2>
+    <p class="lines">{% for e in r.education %}{{ e.school }} | {{ e.years }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</p>
+  </section>
+
+  <section class="keep">
+    <h2>Technical Skills</h2>
+    {%- for g in r.skills %}
+    {%- assign list = g.items | join: ", " %}
+    <p class="skill"><strong>{{ g.group }}:</strong> {{ list | slice: 0 | upcase }}{{ list | slice: 1, 2000 }}</p>
+    {%- endfor %}
+  </section>
+</main>
+</body>
+</html>

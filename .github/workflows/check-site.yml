@@ -29,7 +29,7 @@ jobs:
 
       - name: Check that key pages were built
         run: |
-          for f in index.html casefile.html 404.html robots.txt sitemap.xml .well-known/security.txt; do
+          for f in index.html casefile.html resume.html 404.html robots.txt sitemap.xml .well-known/security.txt; do
             test -s "_site/$f" || { echo "::error::_site/$f is missing or empty"; exit 1; }
           done
           if grep -R --include='*.html' -l '{{\|{%' _site; then
