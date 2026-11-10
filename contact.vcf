@@ -1,0 +1,21 @@
+---
+# Contact card behind the "Save contact" buttons. Built from _data/resume.yml.
+# No phone number, on purpose: the public site never publishes one.
+---
+{%- assign p = site.data.resume.person -%}
+{%- assign first_name = p.name | split: ' ' | first -%}
+{%- assign last_name = p.name | split: ' ' | last -%}
+BEGIN:VCARD
+VERSION:3.0
+N:{{ last_name }};{{ first_name }};;;
+FN:{{ p.name }}
+TITLE:{{ p.title }}
+EMAIL;TYPE=INTERNET,PREF:{{ p.email }}
+URL:{{ site.url }}/
+item1.URL:{{ p.linkedin }}
+item1.X-ABLabel:LinkedIn
+item2.URL:{{ p.github }}
+item2.X-ABLabel:GitHub
+ADR;TYPE=HOME:;;;{{ p.locality }};{{ p.region }};;USA
+NOTE:{{ p.title }}\, {{ p.field }}
+END:VCARD

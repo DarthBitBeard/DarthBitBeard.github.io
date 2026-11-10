@@ -8,6 +8,7 @@
 {%- assign first_name = p.name | split: ' ' | first -%}
 {%- assign last_name = p.name | split: ' ' | last -%}
 {%- assign current = r.jobs | first -%}
+{%- assign vcard_name = p.name | replace: ' ', '_' | append: '.vcf' -%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,14 +93,11 @@
     <a class="scroll-hint" href="#now" aria-label="Scroll to content"><span></span></a>
   </section>
 
-  <div class="ticker-wrap" id="tickerWrap">
-    <div class="ticker">
-      <div class="ticker-track">
-        {% for s in r.ticker_skills %}<span>{{ s }}</span>{% endfor %}
-        {% for s in r.ticker_skills %}<span aria-hidden="true">{{ s }}</span>{% endfor %}
-      </div>
+  <div class="ticker">
+    <div class="ticker-track">
+      {% for s in r.ticker_skills %}<span>{{ s }}</span>{% endfor %}
+      {% for s in r.ticker_skills %}<span aria-hidden="true">{{ s }}</span>{% endfor %}
     </div>
-    <button class="ticker-toggle" id="tickerToggle" type="button" aria-pressed="false" aria-label="Pause the scrolling skills" title="Pause"><svg class="i i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
   </div>
 
   <section class="now" id="now" aria-label="What {{ first_name }} is working on now">
@@ -175,7 +173,7 @@
           <span class="job-dot" aria-hidden="true"></span>
           <p class="job-span">{{ job.span }}</p>
           <div class="job-card">
-            <h3>{{ job.employer }}</h3>
+            <h3>{{ job.employer }}{% if job.span contains 'Present' %} <span class="job-current"><span class="live-dot" aria-hidden="true"></span>Current</span>{% endif %}</h3>
             {%- for role in job.roles %}
             <p class="role">{% for t in role.titles %}<strong>{{ t.name }}</strong><span class="role-dates">{{ t.dates }}</span>{% endfor %}</p>
             <ul>
@@ -308,6 +306,7 @@
           <a class="btn btn-on-dark" href="{{ p.linkedin }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-briefcase"/></svg>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn btn-on-dark" href="{{ p.github }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>GitHub<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn btn-on-dark" href="{{ p.resume_pdf }}" download><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Download resume (PDF)</a>
+          <a class="btn btn-on-dark" href="contact.vcf" download="{{ vcard_name }}"><svg class="i" aria-hidden="true"><use href="#i-contact"/></svg>Save contact</a>
         </div>
       </div>
     </div>
@@ -315,14 +314,52 @@
 </main>
 
 <footer>
-  <div class="wrap footer-inner">
-    <p class="footer-brand"><span class="logo-mark" aria-hidden="true">LB</span>{{ p.name }}, {{ p.location }}</p>
-    <p>Last updated <time datetime="{{ site.time | date: '%Y-%m-%d' }}">{{ site.time | date: '%B %-d, %Y' }}</time>. No phone number is published on this public site.</p>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <p class="footer-brand"><span class="logo-mark" aria-hidden="true">LB</span>{{ p.name }}</p>
+        <p>{{ p.title }}, {{ p.field }}</p>
+        <p>{{ p.location }}</p>
+      </div>
+      <nav class="footer-cols" aria-label="Footer">
+        <div>
+          <p class="footer-h">On this page</p>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Security Projects</a></li>
+            <li><a href="#volunteering">Volunteering</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-h">Elsewhere</p>
+          <ul>
+            <li><a href="{{ p.linkedin }}" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="{{ p.github }}" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="mailto:{{ p.email }}">Email</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-h">Resume</p>
+          <ul>
+            <li><a href="{{ p.resume_pdf }}" target="_blank" rel="noopener">View PDF<span class="sr-only"> (opens in a new tab)</span></a></li>
+            <li><a href="{{ p.resume_pdf }}" download>Download PDF</a></li>
+            <li><a href="contact.vcf" download="{{ vcard_name }}">Save contact card</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>Last updated <time datetime="{{ site.time | date: '%Y-%m-%d' }}">{{ site.time | date: '%B %-d, %Y' }}</time>. No phone number is published on this public site.</p>
+    </div>
   </div>
 </footer>
 <script id="eggData" type="application/json">{"person": {{ p | jsonify }}, "certs": {{ r.certifications | map: "name" | jsonify }}, "projects": {{ r.projects | map: "title" | jsonify }}}</script>
 
 <div class="copy-toast" id="copyToast" role="status" aria-live="polite"></div>
-<a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg class="i" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
+<a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg class="to-top-ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" pathLength="100"/></svg><svg class="i" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
 </body>
 </html>
