@@ -7,7 +7,10 @@ Needs Pillow 11+ (pip install pillow). Writes:
     photo-400.avif, photo-800.avif, photo-400.webp, photo-800.webp
     og-image.jpg            1200x630 link preview for LinkedIn, Slack, etc.
     favicon-32.png, apple-touch-icon.png
+    _includes/vcard-photo.vcf  square photo embedded in contact.vcf
 """
+import base64
+import io
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -71,6 +74,23 @@ def og_image(photo: Image.Image) -> None:
     img.save(ROOT / "og-image.jpg", quality=86, optimize=True, progressive=True)
 
 
+def vcard_photo(photo: Image.Image) -> None:
+    """Square, face-centered JPEG for the "Save contact" card.
+
+    Phones mostly ignore photo links in a vCard, so the image is embedded as
+    base64, folded to 75-octet lines with CRLF as the vCard 3.0 format requires.
+    """
+    side = round(photo.width * 0.9)
+    left = round(photo.width * 0.0625)
+    square = photo.crop((left, 0, left + side, side)).resize((300, 300), Image.LANCZOS)
+    buf = io.BytesIO()
+    square.save(buf, "JPEG", quality=82, optimize=True, progressive=False)
+    line = "PHOTO;ENCODING=b;TYPE=JPEG:" + base64.b64encode(buf.getvalue()).decode("ascii")
+    folded = [line[:75]] + [" " + line[i:i + 74] for i in range(75, len(line), 74)]
+    out = ROOT / "_includes" / "vcard-photo.vcf"
+    out.write_bytes("\r\n".join(folded).encode("ascii"))
+
+
 def icons() -> None:
     for size, name in ((32, "favicon-32.png"), (180, "apple-touch-icon.png")):
         scale = 8
@@ -92,5 +112,6 @@ if __name__ == "__main__":
     src = Image.open(ROOT / "photo.jpg").convert("RGB")
     photo_variants(src)
     og_image(src)
+    vcard_photo(src)
     icons()
     print("done")
