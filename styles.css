@@ -596,6 +596,13 @@ a:focus-visible, button:focus-visible, .btn:focus-visible { outline: 3px solid c
 }
 .cert-verify:hover { text-decoration: underline; text-underline-offset: 3px; }
 .cert-verify .i { width: 0.95em; height: 0.95em; }
+/* The whole card opens the verification page: the link's ::after covers the card. */
+.cert-linked { cursor: pointer; }
+.cert-linked .cert-verify { position: static; }
+.cert-linked .cert-verify::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.cert-linked:hover .cert-verify { text-decoration: underline; text-underline-offset: 3px; }
+.cert-linked .cert-verify:focus-visible { outline: none; }
+.cert-linked:has(.cert-verify:focus-visible) { outline: 3px solid color-mix(in srgb, var(--blue) 45%, transparent); outline-offset: 3px; }
 .cert-feature {
   grid-column: span 2;
   padding: 30px;
@@ -839,6 +846,66 @@ a:focus-visible, button:focus-visible, .btn:focus-visible { outline: 3px solid c
 }
 .contact-email:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 22px 50px rgba(0, 113, 227, 0.45); }
 .contact-email .i { color: var(--blue); }
+.contact-email-row { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.contact-email-row .contact-email { margin-bottom: 0; }
+.copy-email {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e7edf6;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s var(--ease);
+}
+.copy-email:hover { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.34); transform: translateY(-2px); }
+.copy-email .i { width: 20px; height: 20px; }
+.copy-email.copied { background: rgba(94, 234, 212, 0.16); border-color: rgba(94, 234, 212, 0.5); color: #5eead4; }
+
+/* ---------- Copy-link buttons on section kickers ---------- */
+.section-link {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: 2px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.section-link .i { width: 16px; height: 16px; }
+.section-head:hover .section-link, .section-link:focus-visible { opacity: 0.85; }
+.section-link:hover { opacity: 1; background: var(--blue-soft); }
+.dark-band .section-link:hover { background: rgba(124, 196, 255, 0.14); }
+@media (hover: none) { .section-link { opacity: 0.6; } }
+
+/* ---------- "Copied" confirmation ---------- */
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 270;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #0f1729;
+  color: #eef2f7;
+  border: 1px solid rgba(124, 196, 255, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  font-size: 0.92rem;
+  font-weight: 600;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.25s ease, transform 0.3s var(--ease);
+}
+.copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.copy-toast:empty { visibility: hidden; }
 .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
 .btn-on-dark { background: rgba(255, 255, 255, 0.06); color: #e7edf6; border-color: rgba(255, 255, 255, 0.14); }
 .btn-on-dark:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.3); }
@@ -960,13 +1027,13 @@ html.sk-arriving .hero .reveal { transition-delay: calc(0.75s + var(--i, 0) * 90
   html { scroll-behavior: auto; }
   .reveal, .photo-card.reveal { opacity: 1; transform: none; transition: none; }
   .blob, .ticker-track, .float-badge, .scroll-hint span, .status-dot::after, .live-dot::after { animation: none; }
-  .btn, .cert-card, .project, .stat-tile, .skill-card, .photo-frame, .now-item, .to-top { transition: none; }
+  .btn, .cert-card, .project, .stat-tile, .skill-card, .photo-frame, .now-item, .to-top, .copy-email, .section-link, .copy-toast { transition: none; }
 }
 @media print {
   :root, :root[data-theme="dark"] {
     --bg: #fff; --bg-soft: #fff; --surface: #fff; --text: #111; --soft-text: #333; --muted: #555; --border: #ccc;
   }
-  .nav, .progress, .scroll-hint, .hero-ctas, .hero-bg, .ticker, .float-badge, .photo-glow, .to-top, .contact-links, .dark-band-bg, .contact-glow { display: none !important; }
+  .nav, .progress, .scroll-hint, .hero-ctas, .hero-bg, .ticker, .float-badge, .photo-glow, .to-top, .contact-links, .copy-email, .section-link, .copy-toast, .dark-band-bg, .contact-glow { display: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
   .section, .hero { padding: 24px 0; }
   .dark-band, .contact-card { background: #fff !important; color: #111 !important; box-shadow: none; }

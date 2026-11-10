@@ -146,7 +146,7 @@
         {%- assign issuer_label = c.issuer | split: ' ' | first %}
         {%- if c.issuer_short %}{% assign issuer_label = c.issuer_short %}{% endif %}
         {%- assign issuer_key = issuer_label | downcase | split: ' ' | first %}
-        <article class="cert-card spot{% if c.feature %} cert-feature{% endif %} reveal">
+        <article class="cert-card spot{% if c.feature %} cert-feature{% endif %}{% if c.verify_url %} cert-linked{% endif %} reveal">
           <div class="cert-top"><span class="issuer issuer--{{ issuer_key }}">{{ issuer_label }}</span>{% if c.new_until and c.new_until > today %}<span class="cert-badge" data-new-until="{{ c.new_until }}">New</span>{% endif %}</div>
           <h3>{{ c.name }}</h3>
           <p>{{ c.detail }}</p>
@@ -297,7 +297,10 @@
         <p class="kicker kicker--light"><span>07</span>Contact</p>
         <h2>Let's talk security</h2>
         <p>For IT and cybersecurity roles, or to talk through a project, email is the fastest way to reach me.</p>
-        <a class="contact-email" href="mailto:{{ p.email }}"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>{{ p.email }}</a>
+        <div class="contact-email-row">
+          <a class="contact-email" href="mailto:{{ p.email }}"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg>{{ p.email }}</a>
+          <button class="copy-email" type="button" data-copy="{{ p.email }}" data-copied="Email address copied" aria-label="Copy email address" title="Copy email address"><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg></button>
+        </div>
         <div class="contact-links">
           <a class="btn btn-on-dark" href="{{ p.linkedin }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-briefcase"/></svg>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn btn-on-dark" href="{{ p.github }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>GitHub<span class="sr-only"> (opens in a new tab)</span></a>
@@ -316,6 +319,7 @@
 </footer>
 <script id="eggData" type="application/json">{"person": {{ p | jsonify }}, "certs": {{ r.certifications | map: "name" | jsonify }}, "projects": {{ r.projects | map: "title" | jsonify }}}</script>
 
+<div class="copy-toast" id="copyToast" role="status" aria-live="polite"></div>
 <a class="to-top" id="toTop" href="#top" aria-label="Back to top"><svg class="i" aria-hidden="true"><use href="#i-arrow-up"/></svg></a>
 </body>
 </html>

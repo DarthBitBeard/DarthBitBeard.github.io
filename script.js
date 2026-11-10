@@ -12,6 +12,18 @@
     themeToggle.setAttribute("aria-pressed", dark ? "true" : "false");
     themeToggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
   }
+  /* Follow the system light/dark setting live until the visitor picks one. */
+  var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+  function onSystemTheme(event) {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    if (saved) { return; }
+    var theme = event.matches ? "dark" : "light";
+    root.setAttribute("data-theme", theme);
+    showTheme(theme);
+  }
+  if (systemDark.addEventListener) { systemDark.addEventListener("change", onSystemTheme); }
+  else if (systemDark.addListener) { systemDark.addListener(onSystemTheme); }
   if (themeToggle) {
     showTheme(root.getAttribute("data-theme") || "light");
     themeToggle.addEventListener("click", function () {
@@ -48,6 +60,69 @@
     if (typeof event.key !== "string" || event.key.length !== 1) { return; }
     typedEgg = (typedEgg + event.key.toLowerCase()).slice(-8);
     if (typedEgg === "casefile") { typedEgg = ""; openCaseFile(); }
+  });
+
+  /* ---------- Copy to clipboard, with a short confirmation ---------- */
+  var copyToast = document.getElementById("copyToast");
+  var toastTimer = null;
+  function announce(message) {
+    if (!copyToast) { return; }
+    copyToast.textContent = message;
+    copyToast.classList.add("show");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      copyToast.classList.remove("show");
+      window.setTimeout(function () { if (!copyToast.classList.contains("show")) { copyToast.textContent = ""; } }, 350);
+    }, 2200);
+  }
+  function fallbackCopy(text) {
+    var area = document.createElement("textarea");
+    area.value = text;
+    area.setAttribute("readonly", "");
+    area.className = "sr-only";
+    document.body.appendChild(area);
+    area.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    area.remove();
+    return ok ? Promise.resolve() : Promise.reject(new Error("copy failed"));
+  }
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () { return fallbackCopy(text); });
+    }
+    return fallbackCopy(text);
+  }
+
+  document.querySelectorAll(".copy-email").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var text = button.getAttribute("data-copy");
+      copyText(text).then(function () {
+        button.classList.add("copied");
+        window.setTimeout(function () { button.classList.remove("copied"); }, 2200);
+        announce(button.getAttribute("data-copied") || "Copied");
+      }, function () { announce("Couldn't copy. The address is " + text); });
+    });
+  });
+
+  /* A copy-link button beside each section's kicker, for sharing a section. */
+  document.querySelectorAll("section[id] > .wrap > .section-head .kicker, section[id] > .wrap > .contact-card .kicker").forEach(function (kicker) {
+    var section = kicker.closest("section[id]");
+    var label = kicker.lastChild && kicker.lastChild.nodeType === 3 ? kicker.lastChild.textContent.trim() : section.id;
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "section-link";
+    button.setAttribute("aria-label", "Copy link to the " + label + " section");
+    button.title = "Copy link to this section";
+    button.innerHTML = '<svg class="i" aria-hidden="true"><use href="#i-link"/></svg>';
+    button.addEventListener("click", function () {
+      var url = location.origin + location.pathname + "#" + section.id;
+      copyText(url).then(function () {
+        try { history.replaceState(null, "", "#" + section.id); } catch (e) {}
+        announce("Link to " + label + " copied");
+      }, function () { announce("Couldn't copy the link"); });
+    });
+    kicker.appendChild(button);
   });
 
   /* ---------- Back-to-top button ---------- */
