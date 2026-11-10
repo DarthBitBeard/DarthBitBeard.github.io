@@ -28,9 +28,26 @@
     showTheme(root.getAttribute("data-theme") || "light");
     themeToggle.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      try { localStorage.setItem("theme", next); } catch (e) {}
-      showTheme(next);
+      function apply() {
+        root.setAttribute("data-theme", next);
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        showTheme(next);
+      }
+      /* Where supported, the new theme spreads out in a circle from the button. */
+      if (!document.startViewTransition || reduceMotion) { apply(); return; }
+      var rect = themeToggle.getBoundingClientRect();
+      var x = rect.left + rect.width / 2;
+      var y = rect.top + rect.height / 2;
+      var radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+      root.classList.add("theme-vt");
+      var transition = document.startViewTransition(apply);
+      transition.ready.then(function () {
+        root.animate(
+          { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + radius + "px at " + x + "px " + y + "px)"] },
+          { duration: 560, easing: "cubic-bezier(0.2, 0.8, 0.2, 1)", pseudoElement: "::view-transition-new(root)" }
+        );
+      }).catch(function () {});
+      transition.finished.then(function () { root.classList.remove("theme-vt"); }, function () { root.classList.remove("theme-vt"); });
     });
   }
 
@@ -179,27 +196,6 @@
     }
   }
 
-  /* ---------- Pause button for the skills ticker ---------- */
-  var tickerWrap = document.getElementById("tickerWrap");
-  var tickerToggle = document.getElementById("tickerToggle");
-  function setTicker(paused) {
-    if (!tickerWrap || !tickerToggle) { return; }
-    tickerWrap.classList.toggle("paused", paused);
-    tickerToggle.setAttribute("aria-pressed", paused ? "true" : "false");
-    tickerToggle.setAttribute("aria-label", paused ? "Play the scrolling skills" : "Pause the scrolling skills");
-    tickerToggle.title = paused ? "Play" : "Pause";
-  }
-  if (tickerWrap && tickerToggle) {
-    var tickerPaused = false;
-    try { tickerPaused = localStorage.getItem("lb-ticker") === "paused"; } catch (e) {}
-    setTicker(tickerPaused);
-    tickerToggle.addEventListener("click", function () {
-      var paused = !tickerWrap.classList.contains("paused");
-      setTicker(paused);
-      try { localStorage.setItem("lb-ticker", paused ? "paused" : "playing"); } catch (e) {}
-    });
-  }
-
   /* ---------- On phones, hide the nav while scrolling down ----------
      It comes back as soon as the visitor scrolls up, nears the top, opens
      the menu, or tabs into it. */
@@ -222,10 +218,143 @@
     topNav.addEventListener("focusin", function () { topNav.classList.remove("nav-hidden"); });
   }
 
+  /* ---------- Sliding highlight behind the active nav link ---------- */
+  var navLinkBox = document.getElementById("navLinks");
+  if (navLinkBox) {
+    var pill = document.createElement("span");
+    pill.className = "nav-pill";
+    pill.setAttribute("aria-hidden", "true");
+    navLinkBox.insertBefore(pill, navLinkBox.firstChild);
+    root.classList.add("nav-pill-ready");
+    var pillPlaced = false;
+    var placePill = function () {
+      var active = navLinkBox.querySelector("a.active");
+      if (!active || !active.offsetWidth) { pill.classList.remove("on"); return; }
+      if (!pillPlaced) { pill.style.transition = "none"; }
+      pill.style.width = active.offsetWidth + "px";
+      pill.style.height = active.offsetHeight + "px";
+      pill.style.transform = "translate(" + active.offsetLeft + "px, " + active.offsetTop + "px)";
+      if (!pillPlaced) { void pill.offsetWidth; pill.style.transition = ""; pillPlaced = true; }
+      pill.classList.add("on");
+    };
+    /* Watch only the links (not the pill itself, which would loop). */
+    if ("MutationObserver" in window) {
+      var linkWatcher = new MutationObserver(placePill);
+      navLinkBox.querySelectorAll("a").forEach(function (a) {
+        linkWatcher.observe(a, { attributes: true, attributeFilter: ["class"] });
+      });
+    }
+    window.addEventListener("resize", placePill);
+    placePill();
+  }
+
+  /* ---------- Experience timeline fills in as you scroll ---------- */
+  var timeline = document.querySelector(".timeline");
+  if (timeline) {
+    var jobs = [].slice.call(timeline.querySelectorAll(".job"));
+    var timelineTicking = false;
+    var fillTimeline = function () {
+      timelineTicking = false;
+      var rect = timeline.getBoundingClientRect();
+      var mark = window.innerHeight * 0.6;
+      var done = rect.height > 0 ? Math.min(1, Math.max(0, (mark - rect.top) / rect.height)) : 1;
+      timeline.style.setProperty("--tl", done.toFixed(3));
+      jobs.forEach(function (job) {
+        var dot = job.querySelector(".job-dot");
+        if (dot) { job.classList.toggle("reached", dot.getBoundingClientRect().top < mark); }
+      });
+    };
+    window.addEventListener("scroll", function () {
+      if (!timelineTicking) { timelineTicking = true; window.requestAnimationFrame(fillTimeline); }
+    }, { passive: true });
+    window.addEventListener("resize", fillTimeline);
+    fillTimeline();
+  }
+
+  /* ---------- How long each role lasted, e.g. "2 yrs 1 mo" ---------- */
+  var MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+  var nowDate = new Date();
+  var thisMonth = nowDate.getFullYear() * 12 + nowDate.getMonth();
+  function monthIndex(text) {
+    if (/present/i.test(text)) { return thisMonth; }
+    var match = /([A-Za-z]{3})[A-Za-z]*\.?\s+(\d{4})/.exec(text);
+    if (!match || !(match[1].toLowerCase() in MONTHS)) { return null; }
+    return parseInt(match[2], 10) * 12 + MONTHS[match[1].toLowerCase()];
+  }
+  function formatMonths(total) {
+    var years = Math.floor(total / 12);
+    var months = total % 12;
+    var parts = [];
+    if (years) { parts.push(years + (years === 1 ? " yr" : " yrs")); }
+    if (months) { parts.push(months + (months === 1 ? " mo" : " mos")); }
+    return parts.join(" ");
+  }
+  document.querySelectorAll(".role-dates").forEach(function (pillEl) {
+    var ends = pillEl.textContent.split(/\s+[-\u2013\u2014]\s+/);
+    if (ends.length !== 2) { return; }
+    var start = monthIndex(ends[0]);
+    var end = monthIndex(ends[1]);
+    if (start === null || end === null || end < start) { return; }
+    var label = formatMonths(end - start + 1);
+    if (!label) { return; }
+    var dur = document.createElement("span");
+    dur.className = "role-dur";
+    dur.textContent = label;
+    pillEl.appendChild(document.createTextNode(" "));
+    pillEl.appendChild(dur);
+  });
+
+  /* ---------- "Now" dates also say how long ago ---------- */
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  document.querySelectorAll(".now-date time[datetime]").forEach(function (time) {
+    var parts = time.getAttribute("datetime").split("-");
+    if (parts.length !== 3) { return; }
+    var then = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    var days = Math.round((today - then) / 86400000);
+    if (isNaN(days) || days < 0) { return; }
+    var label;
+    if (days === 0) { label = "today"; }
+    else if (days === 1) { label = "yesterday"; }
+    else if (days < 14) { label = days + " days ago"; }
+    else if (days < 60) { label = Math.round(days / 7) + " weeks ago"; }
+    else if (days < 365) { label = Math.round(days / 30.44) + " months ago"; }
+    else { var yrs = Math.round(days / 365.25); label = yrs + (yrs === 1 ? " year ago" : " years ago"); }
+    var ago = document.createElement("span");
+    ago.className = "now-ago";
+    ago.textContent = label;
+    time.parentNode.appendChild(document.createTextNode(" "));
+    time.parentNode.appendChild(ago);
+  });
+
+  /* ---------- Briefly highlight the section a link jumps to ---------- */
+  var landTimers = {};
+  function landOn(id, delay) {
+    var section = id ? document.getElementById(id) : null;
+    var head = section ? section.querySelector(".section-head") : null;
+    if (!head) { return; }
+    window.clearTimeout(landTimers[id]);
+    head.classList.remove("landed");
+    landTimers[id] = window.setTimeout(function () {
+      head.classList.add("landed");
+      landTimers[id] = window.setTimeout(function () { head.classList.remove("landed"); }, 2000);
+    }, delay);
+  }
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest ? event.target.closest("a[href^='#']") : null;
+    if (link) { landOn(link.getAttribute("href").slice(1), reduceMotion ? 0 : 450); }
+  });
+  if (location.hash) { landOn(location.hash.slice(1), 700); }
+
   /* ---------- Back-to-top button ---------- */
   function onScroll() {
     var y = window.scrollY || root.scrollTop;
-    if (toTop) { toTop.classList.toggle("show", y > window.innerHeight * 0.9); }
+    if (toTop) {
+      toTop.classList.toggle("show", y > window.innerHeight * 0.9);
+      var max = root.scrollHeight - window.innerHeight;
+      var done = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      toTop.style.setProperty("--ring", (100 - done * 100).toFixed(1));
+    }
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
