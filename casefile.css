@@ -185,6 +185,7 @@ a:focus-visible, .btn:focus-visible, .board-btn:focus-visible { outline: 2px sol
 .menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; }
 .menu-icon::before { top: -6px; }
 .menu-icon::after { top: 6px; }
+html.menu-lock { overflow: hidden; }
 .nav.menu-open .menu-icon { background: transparent; }
 .nav.menu-open .menu-icon::before { transform: translateY(6px) rotate(45deg); }
 .nav.menu-open .menu-icon::after { transform: translateY(-6px) rotate(-45deg); }

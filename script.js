@@ -125,6 +125,103 @@
     kicker.appendChild(button);
   });
 
+  /* ---------- Filter certifications by issuer ---------- */
+  var certGrid = document.querySelector(".cert-grid");
+  if (certGrid) {
+    var certCards = [].slice.call(certGrid.querySelectorAll(".cert-card"));
+    var issuerCounts = {};
+    var issuers = [];
+    certCards.forEach(function (card) {
+      var tag = card.querySelector(".issuer");
+      var issuer = tag ? tag.textContent.trim() : "Other";
+      card.setAttribute("data-issuer", issuer);
+      if (!issuerCounts[issuer]) { issuerCounts[issuer] = 0; issuers.push(issuer); }
+      issuerCounts[issuer] += 1;
+    });
+    if (issuers.length > 1) {
+      issuers.sort(function (a, b) { return issuerCounts[b] - issuerCounts[a] || a.localeCompare(b); });
+      var filterBar = document.createElement("div");
+      filterBar.className = "cert-filter";
+      filterBar.setAttribute("role", "group");
+      filterBar.setAttribute("aria-label", "Filter certifications by issuer");
+      var filterStatus = document.createElement("p");
+      filterStatus.className = "sr-only";
+      filterStatus.setAttribute("aria-live", "polite");
+      var chips = [];
+      var addChip = function (label, value, count) {
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "cert-chip";
+        chip.setAttribute("aria-pressed", value === "" ? "true" : "false");
+        chip.setAttribute("aria-label", (value ? label : "All issuers") + ", " + count + (count === 1 ? " certification" : " certifications"));
+        chip.appendChild(document.createTextNode(label));
+        var num = document.createElement("span");
+        num.className = "cert-chip-count";
+        num.textContent = count;
+        chip.appendChild(num);
+        chip.addEventListener("click", function () {
+          var shown = 0;
+          chips.forEach(function (c) { c.setAttribute("aria-pressed", c === chip ? "true" : "false"); });
+          certCards.forEach(function (card) {
+            var match = value === "" || card.getAttribute("data-issuer") === value;
+            card.hidden = !match;
+            if (match) { shown += 1; card.classList.add("visible"); }
+          });
+          filterStatus.textContent = "Showing " + shown + (shown === 1 ? " certification" : " certifications") + (value ? " from " + value : "");
+        });
+        chips.push(chip);
+        filterBar.appendChild(chip);
+      };
+      addChip("All", "", certCards.length);
+      issuers.forEach(function (issuer) { addChip(issuer, issuer, issuerCounts[issuer]); });
+      certGrid.parentNode.insertBefore(filterBar, certGrid);
+      certGrid.parentNode.insertBefore(filterStatus, certGrid);
+    }
+  }
+
+  /* ---------- Pause button for the skills ticker ---------- */
+  var tickerWrap = document.getElementById("tickerWrap");
+  var tickerToggle = document.getElementById("tickerToggle");
+  function setTicker(paused) {
+    if (!tickerWrap || !tickerToggle) { return; }
+    tickerWrap.classList.toggle("paused", paused);
+    tickerToggle.setAttribute("aria-pressed", paused ? "true" : "false");
+    tickerToggle.setAttribute("aria-label", paused ? "Play the scrolling skills" : "Pause the scrolling skills");
+    tickerToggle.title = paused ? "Play" : "Pause";
+  }
+  if (tickerWrap && tickerToggle) {
+    var tickerPaused = false;
+    try { tickerPaused = localStorage.getItem("lb-ticker") === "paused"; } catch (e) {}
+    setTicker(tickerPaused);
+    tickerToggle.addEventListener("click", function () {
+      var paused = !tickerWrap.classList.contains("paused");
+      setTicker(paused);
+      try { localStorage.setItem("lb-ticker", paused ? "paused" : "playing"); } catch (e) {}
+    });
+  }
+
+  /* ---------- On phones, hide the nav while scrolling down ----------
+     It comes back as soon as the visitor scrolls up, nears the top, opens
+     the menu, or tabs into it. */
+  var topNav = document.getElementById("topNav");
+  var narrow = window.matchMedia("(max-width: 860px)");
+  var lastNavY = window.scrollY || 0;
+  function updateNav() {
+    if (!topNav) { return; }
+    var y = window.scrollY || 0;
+    if (!narrow.matches || y < 120 || topNav.classList.contains("menu-open") || topNav.contains(document.activeElement)) {
+      topNav.classList.remove("nav-hidden");
+      lastNavY = y;
+      return;
+    }
+    if (y > lastNavY + 10) { topNav.classList.add("nav-hidden"); lastNavY = y; }
+    else if (y < lastNavY - 10) { topNav.classList.remove("nav-hidden"); lastNavY = y; }
+  }
+  if (topNav) {
+    window.addEventListener("scroll", updateNav, { passive: true });
+    topNav.addEventListener("focusin", function () { topNav.classList.remove("nav-hidden"); });
+  }
+
   /* ---------- Back-to-top button ---------- */
   function onScroll() {
     var y = window.scrollY || root.scrollTop;

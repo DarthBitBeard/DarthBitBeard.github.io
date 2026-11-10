@@ -71,7 +71,7 @@
         <p class="hero-sub reveal">{{ p.tagline }}</p>
         <div class="hero-ctas reveal">
           <a class="btn btn-primary" href="#projects">View security projects<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn-ghost" href="{{ p.resume_pdf }}" download><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Resume (PDF)</a>
+          <a class="btn btn-ghost" href="{{ p.resume_pdf }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-external"/></svg>View resume<span class="sr-only"> (PDF, opens in a new tab)</span></a>
         </div>
         <ul class="hero-pills reveal" aria-label="Key certifications">
           {%- for pill in r.hero_pills %}
@@ -92,11 +92,14 @@
     <a class="scroll-hint" href="#now" aria-label="Scroll to content"><span></span></a>
   </section>
 
-  <div class="ticker">
-    <div class="ticker-track">
-      {% for s in r.ticker_skills %}<span>{{ s }}</span>{% endfor %}
-      {% for s in r.ticker_skills %}<span aria-hidden="true">{{ s }}</span>{% endfor %}
+  <div class="ticker-wrap" id="tickerWrap">
+    <div class="ticker">
+      <div class="ticker-track">
+        {% for s in r.ticker_skills %}<span>{{ s }}</span>{% endfor %}
+        {% for s in r.ticker_skills %}<span aria-hidden="true">{{ s }}</span>{% endfor %}
+      </div>
     </div>
+    <button class="ticker-toggle" id="tickerToggle" type="button" aria-pressed="false" aria-label="Pause the scrolling skills" title="Pause"><svg class="i i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="i i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
   </div>
 
   <section class="now" id="now" aria-label="What {{ first_name }} is working on now">
@@ -304,7 +307,7 @@
         <div class="contact-links">
           <a class="btn btn-on-dark" href="{{ p.linkedin }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-briefcase"/></svg>LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
           <a class="btn btn-on-dark" href="{{ p.github }}" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>GitHub<span class="sr-only"> (opens in a new tab)</span></a>
-          <a class="btn btn-on-dark" href="{{ p.resume_pdf }}" download><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Resume (PDF)</a>
+          <a class="btn btn-on-dark" href="{{ p.resume_pdf }}" download><svg class="i" aria-hidden="true"><use href="#i-download"/></svg>Download resume (PDF)</a>
         </div>
       </div>
     </div>
