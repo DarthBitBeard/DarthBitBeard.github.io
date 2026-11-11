@@ -50,7 +50,8 @@ now:
       text_casefile: "Open source home network scanner, ready to use and still being updated. See it in the Evidence Board below."
     - title: "Honeypot live"
       date: 2026-10-30
-      text: "Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. The live dashboard stays private."
+      text: "Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. See the live dashboard in Security Projects below."
+      text_casefile: "Deployed October 28, 2026, on Oracle Cloud Always Free. T-Pot logged 149,551 attacks in 24 hours as of October 30, 2026, about 3,660 in the last hour. See the live dashboard on the Evidence Board below."
 
 # Skills ticker on the Classic skin.
 ticker_skills:
@@ -232,6 +233,8 @@ projects:
       - "Deployed a T-Pot honeypot on an isolated Oracle Cloud Always Free virtual machine, with only decoy services exposed to the internet."
       - "Collects real SSH, SQL, SIP, and HTTP attack telemetry through Cowrie, Dionaea, Sentrypeer, and Tanner, with an attack map showing source countries and service types."
       - "Logged 149,551 attacks in 24 hours as of October 30, 2026, up from 3,292 on October 28, 2026, with counts and trends shared only in sanitized form, no source IPs or payloads published."
+    link_url: "https://threat.beardlab.us/display"
+    link_label: "View the live attack dashboard"
   - eyebrow: "Offensive Security Practice"
     icon: "target"
     title: "Hack The Box Labs"
